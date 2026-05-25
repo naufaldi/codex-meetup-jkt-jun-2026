@@ -43,13 +43,19 @@ body {
     width: 1920px;
     height: 1080px;
     overflow: hidden;
-    display: none;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
     background: var(--slide-bg, #fff);
 }
 
 .slide.active,
 .slide.visible {
-    display: block;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
 }
 
 /* 5. Keep media inside authored slide bounds */
@@ -97,6 +103,9 @@ svg {
     .slide {
         position: relative;
         display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
         width: 1920px;
         height: 1080px;
         break-after: page;

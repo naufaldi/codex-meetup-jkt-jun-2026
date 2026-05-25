@@ -44,6 +44,7 @@ These invariants apply to EVERY slide in EVERY presentation:
 - The stage scales uniformly to fit the viewport. It may letterbox/pillarbox; it must not re-layout content.
 - Do not use responsive breakpoints to rearrange slide content for phones.
 - Use fixed internal slide measurements at the 1920×1080 design size.
+- Slide visibility must be controlled by `.active` / `.visible` using `visibility`, `opacity`, and `pointer-events` from `viewport-base.css`. Do not use `display: none` / `display: block` for slide switching; later layout classes such as `.slide-content { display: flex; }` can override them and make every slide visible at once.
 - Use `clamp()` only for non-slide UI outside the stage, or for small fallback previews where a full stage is impractical.
 - Include `prefers-reduced-motion` support
 - Never negate CSS functions directly (`-clamp()`, `-min()`, `-max()` are silently ignored) — use `calc(-1 * clamp(...))` instead
