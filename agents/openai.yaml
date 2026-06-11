@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Slides"
+  short_description: "Build polished HTML slide decks"
+  default_prompt: "Use $frontend-slides to create a polished HTML presentation from my notes."

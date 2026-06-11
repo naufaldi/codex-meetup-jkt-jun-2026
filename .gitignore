@@ -2,4 +2,5 @@
 .claude-design/
 node_modules/
 .vercel/
+.netlify/
 *.log

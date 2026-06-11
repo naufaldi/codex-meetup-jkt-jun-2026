@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Codex in Daily Work - Codex Meetup JKT Jun 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===========================================
+       CSS CUSTOM PROPERTIES
+       Professional Tech Meetup visual system
+       =========================================== */
+    :root {
+      --stage-bg: #1729a8;
+      --slide-bg: #203fd0;
+      --bg-deep: #242cac;
+      --bg-blue: #2f58d7;
+      --primary: #5d61ea;
+      --secondary: #8b72f5;
+      --accent: #a5c5f5;
+      --glow: #d3dcf2;
+      --ink: #f7f9ff;
+      --muted: #d7def8;
+      --soft: #eef3ff;
+      --line: rgba(247, 249, 255, 0.24);
+      --panel: rgba(18, 35, 150, 0.34);
+      --panel-strong: rgba(21, 35, 130, 0.58);
+      --before: #e4e3f3;
+      --after: #a5c5f5;
+      --blue: var(--accent);
+      --yellow: #e9ebff;
+      --font-display: "Plus Jakarta Sans", sans-serif;
+      --font-body: "IBM Plex Sans", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ===========================================
+       BASE RESET
+       =========================================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* ===========================================
+       FIXED 16:9 STAGE: MANDATORY BASE STYLES
+       Include this ENTIRE file in every presentation.
+       Slides are authored at 1920x1080 and scaled as a whole.
+       =========================================== */
+
+    /* 1. Lock the browser viewport */
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--stage-bg, #000);
+    }
+
+    /* 2. Full-window deck viewport */
+    .deck-viewport {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        background: var(--stage-bg, #000);
+    }
+
+    /* 3. Fixed 16:9 design canvas.
+       JavaScript sets transform: translate(...) scale(...). */
+    .deck-stage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        transform-origin: 0 0;
+        background: var(--slide-bg, #fff);
+    }
+
+    /* 4. Slides stack inside the fixed stage.
+       Content must be laid out at 1920x1080, not reflowed per device. */
+    .slide {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        background: var(--slide-bg, #fff);
+    }
+
+    .slide.active,
+    .slide.visible {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 1;
+    }
+
+    /* 5. Keep media inside authored slide bounds */
+    img,
+    video,
+    canvas,
+    svg {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    /* 6. Presentation chrome stays outside the slide design system */
+    .deck-controls {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        z-index: 1000;
+    }
+
+    /* 7. Print one fixed-size slide per page */
+    @media print {
+        html,
+        body {
+            width: 1920px;
+            height: auto;
+            overflow: visible;
+            background: #fff;
+        }
+
+        .deck-viewport {
+            position: static;
+            overflow: visible;
+            background: #fff;
+        }
+
+        .deck-stage {
+            position: static;
+            width: auto;
+            height: auto;
+            transform: none !important;
+            background: none;
+        }
+
+        .slide {
+            position: relative;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            width: 1920px;
+            height: 1080px;
+            break-after: page;
+            page-break-after: always;
+        }
+
+        .slide:last-child {
+            break-after: auto;
+            page-break-after: auto;
+        }
+
+        .deck-controls {
+            display: none !important;
+        }
+    }
+
+    /* 8. Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.2s !important;
+        }
+    }
+
+    /* ===========================================
+       SLIDE FOUNDATION
+       =========================================== */
+    body {
+      color: var(--ink);
+      font-family: var(--font-body);
+    }
+
+    .slide {
+      padding: 76px 88px;
+      background:
+        linear-gradient(120deg, rgba(22, 34, 162, 0.88), rgba(38, 70, 211, 0.64) 46%, rgba(28, 33, 156, 0.86)),
+        radial-gradient(circle at 74% 34%, rgba(211, 220, 242, 0.34), transparent 24%),
+        radial-gradient(circle at 16% 78%, rgba(139, 114, 245, 0.28), transparent 34%),
+        url("assets/backgrounds/codex-img.png");
+      background-size: cover;
+      background-position: center;
+      isolation: isolate;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        radial-gradient(circle at 64% 36%, rgba(247, 249, 255, 0.38), transparent 22%),
+        linear-gradient(rgba(247, 249, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 249, 255, 0.035) 1px, transparent 1px);
+      background-size: auto, 58px 58px, 58px 58px;
+      opacity: 0.8;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.92), transparent 86%);
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      z-index: -1;
+      border: 1px solid rgba(247, 249, 255, 0.18);
+      box-shadow: inset 0 0 140px rgba(165, 197, 245, 0.08);
+      pointer-events: none;
+    }
+
+    .slide-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 22px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      text-shadow: 0 2px 22px rgba(18, 35, 150, 0.52);
+    }
+
+    .slide-kicker::before {
+      content: "";
+      width: 54px;
+      height: 2px;
+      background: var(--glow);
+      box-shadow: 0 0 22px rgba(211, 220, 242, 0.8);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1,
+    h2 {
+      font-family: var(--font-display);
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 1280px;
+      margin-top: 34px;
+      font-size: 118px;
+      line-height: 0.94;
+      font-weight: 800;
+    }
+
+    h2 {
+      max-width: 1120px;
+      margin-top: 26px;
+      font-size: 86px;
+      line-height: 1.02;
+      font-weight: 800;
+    }
+
+    .lead {
+      max-width: 1040px;
+      margin-top: 34px;
+      color: var(--soft);
+      font-size: 36px;
+      line-height: 1.35;
+      text-shadow: 0 2px 28px rgba(21, 35, 130, 0.55);
+    }
+
+    .meta-row {
+      position: absolute;
+      left: 88px;
+      right: 88px;
+      bottom: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 18px;
+    }
+
+    .page-number {
+      color: var(--ink);
+    }
+
+    /* ===========================================
+       TITLE AND SECTION SLIDES
+       =========================================== */
+    .title-slide {
+      display: grid;
+      grid-template-columns: 1fr 560px;
+      gap: 76px;
+      align-items: center;
+    }
+
+    .title-card {
+      padding: 44px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(247, 249, 255, 0.18), var(--panel));
+      box-shadow: 0 24px 90px rgba(36, 44, 172, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(18px);
+    }
+
+    .title-card strong {
+      display: block;
+      color: var(--after);
+      font-family: var(--font-display);
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .title-card span {
+      display: block;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1.45;
+    }
+
+    .terminal-card {
+      height: 520px;
+      border: 1px solid rgba(247, 249, 255, 0.22);
+      background: linear-gradient(160deg, rgba(21, 35, 130, 0.56), rgba(93, 97, 234, 0.20));
+      box-shadow: 0 0 80px rgba(165, 197, 245, 0.20);
+      backdrop-filter: blur(22px);
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      height: 54px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 0 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--before);
+    }
+
+    .dot:nth-child(2) {
+      background: var(--yellow);
+    }
+
+    .dot:nth-child(3) {
+      background: var(--after);
+    }
+
+    .terminal-body {
+      padding: 34px;
+      font-family: var(--font-mono);
+      font-size: 25px;
+      line-height: 1.65;
+      color: #dff8ff;
+      text-shadow: 0 2px 24px rgba(36, 44, 172, 0.55);
+    }
+
+    .terminal-body b {
+      color: var(--after);
+      font-weight: 700;
+    }
+
+    .section-slide {
+      display: grid;
+      align-content: center;
+    }
+
+    .section-number {
+      color: rgba(247, 249, 255, 0.34);
+      font-family: var(--font-display);
+      font-size: 210px;
+      font-weight: 800;
+      line-height: 0.75;
+    }
+
+    /* ===========================================
+       WORKFLOW SLIDES
+       =========================================== */
+    .workflow-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 710px 1fr;
+      gap: 68px;
+      align-items: center;
+    }
+
+    .workflow-copy {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .workflow-context-layout {
+      height: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .workflow-context-copy {
+      max-width: 1240px;
+    }
+
+    .workflow-context-title {
+      margin-top: 38px;
+      max-width: 1200px;
+      font-size: 112px;
+      line-height: 0.98;
+    }
+
+    .workflow-context-body {
+      margin-top: 34px;
+      max-width: 1080px;
+      color: var(--soft);
+      font-size: 43px;
+      line-height: 1.28;
+      text-shadow: 0 2px 28px rgba(21, 35, 130, 0.55);
+    }
+
+    .workflow-context-example {
+      margin-top: 50px;
+      max-width: 1040px;
+      padding: 34px 38px;
+      border-left: 6px solid var(--before);
+      background: linear-gradient(135deg, rgba(228, 227, 243, 0.16), rgba(18, 35, 150, 0.28));
+      color: var(--muted);
+      font-size: 32px;
+      line-height: 1.35;
+      box-shadow: 0 22px 84px rgba(36, 44, 172, 0.24);
+      backdrop-filter: blur(16px);
+    }
+
+    .workflow-after .workflow-context-example {
+      border-left-color: var(--after);
+      background: linear-gradient(135deg, rgba(165, 197, 245, 0.22), rgba(93, 97, 234, 0.20));
+    }
+
+    .context-side-panel {
+      min-height: 560px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(247, 249, 255, 0.14), var(--panel));
+      box-shadow: 0 24px 90px rgba(36, 44, 172, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+    }
+
+    .context-side-panel span {
+      display: block;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .context-side-panel strong {
+      display: block;
+      margin-top: 28px;
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: 46px;
+      line-height: 1.05;
+    }
+
+    .context-side-panel p {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 27px;
+      line-height: 1.38;
+    }
+
+    .proof-layout {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 34px;
+    }
+
+    .proof-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+    }
+
+    .proof-title {
+      margin-top: 20px;
+      max-width: 1100px;
+      font-size: 68px;
+      line-height: 1;
+    }
+
+    .proof-subtitle {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 28px;
+      line-height: 1.35;
+      text-align: right;
+    }
+
+    .media-panel.proof-media-panel {
+      height: 100%;
+      min-height: 0;
+    }
+
+    .proof-media-panel .placeholder-name {
+      max-width: 1180px;
+      font-size: 70px;
+    }
+
+    .proof-media-panel .placeholder-hint {
+      max-width: 1120px;
+      font-size: 32px;
+    }
+
+    .status-pill {
+      width: fit-content;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 20px;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 14px 44px rgba(36, 44, 172, 0.16);
+    }
+
+    .status-before {
+      border-color: rgba(228, 227, 243, 0.62);
+      color: #f7f9ff;
+      background: rgba(228, 227, 243, 0.14);
+    }
+
+    .status-after {
+      border-color: rgba(165, 197, 245, 0.72);
+      color: #ffffff;
+      background: rgba(165, 197, 245, 0.18);
+      box-shadow: 0 0 32px rgba(165, 197, 245, 0.24);
+    }
+
+    .workflow-title {
+      margin-top: 32px;
+      font-size: 72px;
+      line-height: 1.03;
+    }
+
+    .workflow-body {
+      margin-top: 28px;
+      color: var(--soft);
+      font-size: 34px;
+      line-height: 1.34;
+    }
+
+    .workflow-example {
+      margin-top: 38px;
+      padding: 28px;
+      border-left: 4px solid var(--before);
+      background: linear-gradient(135deg, rgba(228, 227, 243, 0.13), rgba(18, 35, 150, 0.24));
+      color: var(--muted);
+      font-size: 27px;
+      line-height: 1.42;
+      box-shadow: 0 18px 70px rgba(36, 44, 172, 0.22);
+      backdrop-filter: blur(14px);
+    }
+
+    .workflow-after .workflow-example {
+      border-left-color: var(--after);
+      background: linear-gradient(135deg, rgba(165, 197, 245, 0.20), rgba(93, 97, 234, 0.18));
+    }
+
+    .media-panel {
+      position: relative;
+      height: 760px;
+      border: 1px solid rgba(247, 249, 255, 0.25);
+      background:
+        linear-gradient(145deg, rgba(247, 249, 255, 0.15), rgba(18, 35, 150, 0.36)),
+        radial-gradient(circle at 72% 20%, rgba(211, 220, 242, 0.24), transparent 38%);
+      box-shadow: 0 28px 100px rgba(36, 44, 172, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .media-panel::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border: 1px dashed rgba(247, 249, 255, 0.30);
+    }
+
+    .media-panel img {
+      position: absolute;
+      inset: 22px;
+      width: calc(100% - 44px);
+      height: calc(100% - 44px);
+      object-fit: contain;
+      background: rgba(21, 35, 130, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .placeholder-content {
+      position: absolute;
+      inset: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .placeholder-label {
+      width: fit-content;
+      padding: 10px 14px;
+      border: 1px solid rgba(247, 249, 255, 0.42);
+      color: #f7f9ff;
+      font-family: var(--font-mono);
+      font-size: 18px;
+      background: rgba(165, 197, 245, 0.14);
+    }
+
+    .placeholder-name {
+      max-width: 620px;
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: 48px;
+      line-height: 1.05;
+    }
+
+    .placeholder-hint {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 25px;
+      line-height: 1.38;
+    }
+
+    .mini-ui {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .mini-ui span {
+      height: 92px;
+      border: 1px solid rgba(247, 249, 255, 0.16);
+      background: rgba(247, 249, 255, 0.08);
+    }
+
+    /* ===========================================
+       MENTAL MODEL SLIDE
+       =========================================== */
+    .model-grid {
+      margin-top: 70px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .model-card {
+      min-height: 260px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(247, 249, 255, 0.14), var(--panel));
+      box-shadow: 0 22px 80px rgba(36, 44, 172, 0.24);
+      backdrop-filter: blur(16px);
+    }
+
+    .model-card strong {
+      display: block;
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    .model-card span {
+      display: block;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 25px;
+      line-height: 1.35;
+    }
+
+    .image-model-slide .model-grid {
+      position: absolute;
+      left: 88px;
+      bottom: 126px;
+      width: 810px;
+      margin-top: 0;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .image-model-slide .model-card {
+      min-height: 150px;
+      padding: 24px;
+    }
+
+    .image-model-slide .model-card strong {
+      font-size: 28px;
+    }
+
+    .image-model-slide .model-card span {
+      margin-top: 12px;
+      font-size: 20px;
+      line-height: 1.28;
+    }
+
+    .image-model-slide h2 {
+      max-width: 780px;
+      font-size: 74px;
+    }
+
+    .image-model-slide .lead {
+      max-width: 760px;
+      font-size: 30px;
+    }
+
+    .image-model-slide .media-panel {
+      position: absolute;
+      right: 88px;
+      top: 218px;
+      width: 840px;
+      height: 610px !important;
+      margin-top: 0 !important;
+    }
+
+    /* ===========================================
+       CONTROLS AND EDITING
+       =========================================== */
+    .deck-controls {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 10px 14px;
+      border: 1px solid rgba(247, 249, 255, 0.22);
+      border-radius: 999px;
+      background: rgba(21, 35, 130, 0.52);
+      backdrop-filter: blur(14px);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      opacity: 0.22;
+      transition: opacity 0.2s ease;
+    }
+
+    .deck-controls:hover {
+      opacity: 0.96;
+    }
+
+    .deck-controls button,
+    .edit-toggle {
+      border: 1px solid rgba(247, 249, 255, 0.24);
+      border-radius: 999px;
+      background: rgba(247, 249, 255, 0.10);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      cursor: pointer;
+    }
+
+    .deck-controls button {
+      width: 34px;
+      height: 34px;
+    }
+
+    .progress-track {
+      width: 180px;
+      height: 4px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--glow);
+      transition: width 0.3s var(--ease);
+    }
+
+    .edit-hotzone {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10000;
+      width: 86px;
+      height: 86px;
+    }
+
+    .edit-toggle {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 10001;
+      padding: 12px 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .edit-toggle.show,
+    .edit-toggle.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.editing [data-editable="true"] {
+      outline: 2px dashed rgba(54, 231, 180, 0.7);
+      outline-offset: 8px;
+    }
+
+    /* ===========================================
+       ANIMATIONS
+       =========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition:
+        opacity 0.58s var(--ease),
+        transform 0.58s var(--ease);
+    }
+
+    .slide.visible .reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide.visible .reveal:nth-child(2) {
+      transition-delay: 0.08s;
+    }
+
+    .slide.visible .reveal:nth-child(3) {
+      transition-delay: 0.16s;
+    }
+
+    .slide.visible .reveal:nth-child(4) {
+      transition-delay: 0.24s;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-viewport">
+    <main class="deck-stage" id="deckStage" aria-live="polite"></main>
+  </div>
+
+  <div class="deck-controls" aria-label="Slide controls">
+    <button id="prevBtn" title="Previous slide">‹</button>
+    <span id="slideCounter">1 / 1</span>
+    <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+    <button id="nextBtn" title="Next slide">›</button>
+  </div>
+
+  <div class="edit-hotzone" id="editHotzone"></div>
+  <button class="edit-toggle" id="editToggle" title="Edit mode (E)">Edit</button>
+
+  <script>
+    /* ===========================================
+       SLIDE CONTENT
+       Edit this array to adjust talk flow and asset placeholders.
+       =========================================== */
+    const slides = [
+      {
+        type: "title",
+        kicker: "Codex Meetup JKT - Jun 2026",
+        title: "Using Codex in Daily Work",
+        lead: "From software engineering workflows to non-coding work systems.",
+        cardTitle: "Naufaldi Rafif S",
+        cardText: "Codex Ambassador Indonesia",
+        terminal: ["$ codex start", "> connect context", "> use tools", "> verify result", "<b>work becomes a system</b>"]
+      },
+      {
+        type: "model",
+        kicker: "Mental model",
+        title: "Codex is not only a coding chatbot.",
+        lead: "The real shift is context plus tools plus automation plus verification.",
+        cards: [
+          ["Context", "Codebase, docs, screenshots, issues, email, calendar, and files."],
+          ["Tools", "Browser, terminal, GitHub, GitLab, Gmail, Canva, Drive, Slack, and more."],
+          ["Automation", "Repeatable daily or weekly work can run before you start."],
+          ["Verification", "Codex can check output with tests, browser, screenshots, or evidence."]
+        ]
+      },
+      section("01", "Coding / Software Engineer", "Use Codex across the SDLC, not only inside the editor."),
+      pair("Planning", "before", "Planning depends on manual discovery.", "We discuss PRD, KPI, user problem, and backlog. But codebase reality often depends on who remembers what.", "Example: we enter planning with ideas from meetings, but not always with fresh codebase evidence.", "planning-manual-context.png", "PRD, KPI notes, backlog, and scattered tabs"),
+      pair("Planning", "after", "Planning starts with prepared signals.", "Codex scans the codebase, product docs, and previous work to suggest improvements before the meeting.", "Example: weekly automation prepares engineering improvement ideas and possible business opportunities.", "planning-automation-ideas.png", "Codex automation output for planning ideas"),
+      pair("PRD / RFC", "before", "RFC writing is slow and inconsistent.", "Engineers manually read PRD, search existing patterns, and write technical proposal from scratch.", "Example: important edge cases can be missed because the writer does not have all context open.", "prd-rfc-manual.png", "Manual PRD reading and blank RFC document"),
+      pair("PRD / RFC", "after", "Codex drafts RFC from real context.", "Codex reads PRD, existing RFC templates, related code, and creates a first RFC draft for review.", "Example: ask Codex to map product intent into API, UI, data flow, risks, and acceptance criteria.", "prd-rfc-codex-draft.png", "Codex-generated RFC draft with template"),
+      pair("Task Breakdown", "before", "Task breakdown depends on manual judgment.", "We split PRD/RFC into tasks, estimate effort, add labels, and define done criteria by hand.", "Example: different engineers may create very different task quality from the same PRD.", "task-breakdown-manual.png", "Manual GitHub or GitLab issue creation"),
+      pair("Task Breakdown", "after", "Codex creates structured implementation tasks.", "Codex turns RFC into GitHub/GitLab issues with labels, acceptance criteria, dependencies, and DoD.", "Example: prompt Codex to create frontend, backend, test, docs, and rollout tasks from one RFC.", "task-breakdown-codex.png", "Generated GitHub or GitLab task list"),
+      pair("Daily Work", "before", "Daily planning relies on memory.", "Standup is yesterday, today, blockers. But the real repo and issue state may already have changed.", "Example: we choose work based on habit instead of current branch, MR, or CI status.", "daily-manual-standup.png", "Manual standup notes and task board"),
+      pair("Daily Work", "after", "Codex helps choose the next useful task.", "Daily automation summarizes yesterday, checks open work, and recommends what to pick today.", "Example: Codex can inspect task state and create a goal for the selected work.", "daily-codex-goal.png", "Codex daily automation or goal setup"),
+      pair("Guardrails", "before", "Vague prompts produce risky work.", "A task like fix this feature lacks business context, technical constraints, and verification rules.", "Example: the agent can change code, but not necessarily the right behavior.", "guardrail-vague-prompt.png", "Short prompt with missing context"),
+      pair("Guardrails", "after", "A good prompt gives Codex the work boundary.", "Give Codex PRD/RFC, GitHub/GitLab task, route, browser verification, and test expectations.", "Example: base this on the RFC, work only on this issue, verify with browser, then summarize evidence.", "guardrail-complete-prompt.png", "Complete guardrailed prompt screenshot"),
+      pair("Implementation", "before", "Implementation starts with file hunting.", "Engineer searches routes, components, APIs, state, tests, and existing patterns manually.", "Example: most time is often spent rebuilding context, not writing the final code.", "implementation-file-search.png", "Manual file search and editor tabs"),
+      pair("Implementation", "after", "Codex traces the codebase and edits in scope.", "Codex reads the relevant files, explains the plan, applies a focused change, and keeps within boundaries.", "Example: ask Codex to inspect current implementation before changing anything.", "implementation-codex-diff.png", "Codex diff or terminal implementation screenshot"),
+      pair("Debugging", "before", "Debugging can become patch-by-error.", "We see the visible symptom and patch the nearest error message without tracing the full flow.", "Example: frontend shows wrong state, but root cause may be API shape, cache, auth, or data model.", "debugging-symptom.png", "Bug screenshot and console error"),
+      pair("Debugging", "after", "Codex traces from symptom to root cause.", "Codex separates user behavior, frontend state, backend response, data flow, and infra when needed.", "Example: ask Codex to explain root cause before patching, then verify the real behavior.", "debugging-root-cause.png", "Codex root-cause analysis screenshot"),
+      pair("Testing", "before", "Testing often happens late.", "Manual testing and broad test commands can be slow, flaky, or skipped under deadline pressure.", "Example: run everything only after many changes, then failures are harder to understand.", "testing-late.png", "Manual test checklist or failing terminal"),
+      pair("Testing", "after", "Codex runs focused verification.", "Codex picks tests close to the changed behavior, fixes failures, and reports exact evidence.", "Example: unit test for logic, browser check for UI, command output for implementation proof.", "testing-focused-verification.png", "Focused test output and browser check"),
+      pair("MR / Review / Deploy", "before", "MR prep is mostly manual.", "Engineer writes title, summary, screenshots, risk notes, test evidence, and deploy checklist by hand.", "Example: reviewers spend time asking for context that could be in the MR description.", "mr-manual-summary.png", "Manual merge request draft"),
+      pair("MR / Review / Deploy", "after", "Codex prepares review-ready context.", "Codex summarizes diff, writes MR description, checks CI status, and highlights rollout risk.", "Example: generate what changed, why, how verified, and what reviewers should focus on.", "mr-codex-review-ready.png", "Codex MR summary or review output"),
+      pair("Sprint Review / Retro", "before", "Review and retro depend on memory.", "We reconstruct what shipped, what blocked us, and what to improve from scattered updates.", "Example: repeated blockers are easy to miss when the sprint is busy.", "retro-memory.png", "Manual retro notes"),
+      pair("Sprint Review / Retro", "after", "Codex turns work history into learning.", "Codex summarizes shipped work, demos, blockers, follow-ups, and engineering lessons.", "Example: sprint review script plus retro themes from issues, MRs, and notes.", "retro-codex-summary.png", "Codex sprint review or retro summary"),
+      section("02", "Non-Coding Workflows", "The same agentic pattern works outside software engineering."),
+      {
+        type: "model",
+        kicker: "Outside coding",
+        title: "If work has context and repeated steps, Codex can help.",
+        lead: "Projects, skills, plugins, screenshots, browser access, and automation make Codex useful for more than code.",
+        cards: [
+          ["Projects", "Dedicated context for a workflow or role."],
+          ["Skills", "Repeatable instructions for style, tone, or process."],
+          ["Plugins", "Connect to apps like Canva, Gmail, Drive, Calendar, Slack, and Teams."],
+          ["Screenshots", "Share what you see and ask Codex to respond with better context."]
+        ],
+        image: "assets/non-coding/codex-plugins.png"
+      },
+      pair("Content Creation", "before", "Ideas depend on manual scrolling.", "A creator opens X, LinkedIn, YouTube, newsletters, and old notes to find something to say.", "Example: every morning starts with search, not creation.", "content-idea-manual.png", "Manual search for content ideas"),
+      pair("Content Creation", "after", "Codex creates a daily idea pipeline.", "A 24h automation sends content ideas based on niche, previous posts, audience, and current trend.", "Example: you wake up with 5 usable angles, then pick one to develop.", "content-idea-automation.png", "Daily content idea automation screenshot"),
+      pair("Draft Refinement", "before", "Raw ideas are hard to judge alone.", "The idea may be true, but the hook, claim, or wording is still unclear.", "Example: you have a screenshot or thought, but not the final post yet.", "draft-raw-idea.png", "Raw note or screenshot before refinement"),
+      pair("Draft Refinement", "after", "Codex helps sharpen the point.", "Share the screenshot or rough text. Codex identifies the real claim and rewrites it in your tone.", "Example: ask for direct, warmer, and sharper versions before posting.", "draft-codex-refine.png", "Codex refining post from screenshot"),
+      pair("Social Engagement", "before", "Fast replies can create blunders.", "Manual engagement depends on mood, speed, and incomplete context.", "Example: a reply can sound too defensive, too strong, or off-brand.", "social-blunder-risk.png", "Manual reply draft with risk"),
+      pair("Social Engagement", "after", "A dedicated project gives guardrails.", "Create a Codex project for social engagement with tone, persona, risk rules, and reply examples.", "Example: before replying, Codex checks context and gives safer options.", "social-project-guardrails.png", "Project instructions for social engagement"),
+      pair("Marketing", "before", "Campaign inspiration is scattered.", "Marketing work starts with competitor tabs, ad libraries, references, and messy notes.", "Example: inspiration collection takes time before the idea is even clear.", "marketing-manual-research.png", "Competitor references and messy notes"),
+      pair("Marketing", "after", "Codex turns references into angles.", "Codex researches campaign patterns, positioning, hooks, headlines, and visual directions.", "Example: ask for 3 campaign angles with audience, promise, proof, and asset ideas.", "marketing-campaign-angles.png", "Campaign angle research output"),
+      pair("Asset Creation", "before", "Assets start from a blank canvas.", "Teams hunt stock images, wait for design bandwidth, or struggle to explain the visual.", "Example: the campaign idea exists, but the asset direction is still fuzzy.", "asset-blank-canvas.png", "Blank canvas or stock image search"),
+      pair("Asset Creation", "after", "Codex helps generate and refine assets.", "Use image generation for concepts, Creative Production for directions, and Canva for final editing.", "Example: generate a product scene, then resize and polish it in Canva.", "asset-imagegen-canva.png", "Generated visual plus Canva editing"),
+      pair("Slide Creation", "before", "Decks start from a blank slide.", "The hardest part is often story flow, not slide styling.", "Example: rough notes exist, but the narrative is not presentation-ready.", "slides-blank-deck.png", "Blank slide deck"),
+      pair("Slide Creation", "after", "Codex turns rough notes into a deck plan.", "Codex creates structure, slide-by-slide message, speaker notes, and visual placeholders.", "Example: this Codex meetup deck starts from messy notes and becomes a real HTML deck.", "slides-codex-outline.png", "Codex slide outline and generated deck"),
+      pair("Meeting / Report", "before", "Context collection is manual.", "Open calendar, docs, email, chat, and spreadsheets before writing prep or reports.", "Example: meeting prep becomes tab management.", "meeting-manual-context.png", "Calendar, docs, and chat tabs"),
+      pair("Meeting / Report", "after", "Codex prepares the working brief.", "Codex creates agenda, context, open questions, follow-up list, progress, blockers, and metrics.", "Example: weekly report automation creates summary before the meeting.", "meeting-codex-brief.png", "Meeting brief or weekly report output"),
+      pair("Research / Learning", "before", "Learning gets trapped in many tabs.", "You read docs, articles, videos, and notes, but the useful takeaways are scattered.", "Example: after an hour of reading, it is hard to explain what changed in your thinking.", "research-many-tabs.png", "Many research tabs and notes"),
+      pair("Research / Learning", "after", "Codex turns sources into learning notes.", "Codex summarizes, compares, extracts tradeoffs, and creates a concise learning note.", "Example: ask for what matters, what to try next, and what risk to watch.", "research-learning-note.png", "Codex research summary"),
+      pair("Computer Use", "before", "Some workflows still need clicking.", "Forms, dashboards, browser tools, and apps require manual navigation and repeated checks.", "Example: you know what to do, but still need to operate the interface step by step.", "computer-use-manual.png", "Manual app or browser clicking"),
+      pair("Computer Use", "after", "Codex can operate and verify workflows.", "With Computer Use or Chrome, Codex can inspect screens, click, type, and confirm the result.", "Example: ask Codex to open a page, perform a workflow, and capture proof.", "computer-use-codex.png", "Codex operating browser or app"),
+      {
+        type: "model",
+        kicker: "What changes",
+        title: "Before: manual context switching. After: a repeatable work system.",
+        lead: "Codex is strongest when you give it context, tools, guardrails, and a verification target.",
+        cards: [
+          ["Before", "Search manually, copy context, guess next step, verify late."],
+          ["After", "Prepare context, run workflow, produce output, verify evidence."],
+          ["Better prompt", "Role, source context, task boundary, expected output, verification."],
+          ["Better system", "Project, skill, plugin, automation, browser proof."]
+        ]
+      },
+      {
+        type: "section",
+        number: "03",
+        kicker: "Final takeaway",
+        title: "Codex helps turn repeated work into a system.",
+        lead: "Start with one workflow you repeat every week. Give Codex the context, tools, rules, and proof you expect."
+      }
+    ];
+
+    function section(number, title, lead) {
+      return { type: "section", number, kicker: "Section", title, lead };
+    }
+
+    function pair(topic, state, title, body, example, asset, hint) {
+      return {
+        type: "workflow",
+        topic,
+        state,
+        title,
+        body,
+        example,
+        asset,
+        hint
+      };
+    }
+
+    function expandSlides(sourceSlides) {
+      return sourceSlides.flatMap((slide) => {
+        if (slide.type !== "workflow") return [slide];
+        return [
+          { ...slide, view: "context" },
+          { ...slide, view: "proof" }
+        ];
+      });
+    }
+
+    /* ===========================================
+       RENDER HELPERS
+       =========================================== */
+    const stage = document.getElementById("deckStage");
+    const deckSlides = expandSlides(slides);
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function renderTitle(slide, index) {
+      return `
+        <section class="slide title-slide" data-slide="${index}">
+          <div>
+            <div class="slide-kicker reveal" data-editable="true">${escapeHtml(slide.kicker)}</div>
+            <h1 class="reveal" data-editable="true">${escapeHtml(slide.title)}</h1>
+            <p class="lead reveal" data-editable="true">${escapeHtml(slide.lead)}</p>
+          </div>
+          <aside class="title-card reveal">
+            <strong data-editable="true">${escapeHtml(slide.cardTitle)}</strong>
+            <span data-editable="true">${escapeHtml(slide.cardText)}</span>
+            <div class="terminal-card" aria-hidden="true" style="margin-top: 36px;">
+              <div class="terminal-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+              <div class="terminal-body">${slide.terminal.map((line) => `<div>${line}</div>`).join("")}</div>
+            </div>
+          </aside>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
+    function renderSection(slide, index) {
+      return `
+        <section class="slide section-slide" data-slide="${index}">
+          <div class="section-number reveal">${escapeHtml(slide.number)}</div>
+          <div class="slide-kicker reveal" data-editable="true">${escapeHtml(slide.kicker)}</div>
+          <h1 class="reveal" data-editable="true">${escapeHtml(slide.title)}</h1>
+          <p class="lead reveal" data-editable="true">${escapeHtml(slide.lead)}</p>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
+    function renderModel(slide, index) {
+      const imageMarkup = slide.image
+        ? `<div class="media-panel reveal" style="margin-top: 28px; height: 260px;"><img src="${escapeHtml(slide.image)}" alt="Codex plugins screenshot"></div>`
+        : "";
+
+      return `
+        <section class="slide ${slide.image ? "image-model-slide" : ""}" data-slide="${index}">
+          <div class="slide-kicker reveal" data-editable="true">${escapeHtml(slide.kicker)}</div>
+          <h2 class="reveal" data-editable="true">${escapeHtml(slide.title)}</h2>
+          <p class="lead reveal" data-editable="true">${escapeHtml(slide.lead)}</p>
+          <div class="model-grid reveal">
+            ${slide.cards.map(([label, text]) => `
+              <div class="model-card">
+                <strong data-editable="true">${escapeHtml(label)}</strong>
+                <span data-editable="true">${escapeHtml(text)}</span>
+              </div>
+            `).join("")}
+          </div>
+          ${imageMarkup}
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
+    function renderWorkflow(slide, index) {
+      const isAfter = slide.state === "after";
+      const statusClass = isAfter ? "status-after" : "status-before";
+      const label = isAfter ? "After Codex" : "Before Codex";
+      const proofLabel = isAfter ? "Codex workflow proof" : "Manual workflow proof";
+      const contextNote = isAfter
+        ? "What changes when Codex gets context, tools, guardrails, and a verification target."
+        : "What slows the work down when context, tools, and proof stay scattered.";
+
+      if (slide.view === "context") {
+        return `
+          <section class="slide workflow-${escapeHtml(slide.state)}" data-slide="${index}">
+            <div class="workflow-context-layout">
+              <div class="workflow-context-copy">
+                <div class="slide-kicker reveal" data-editable="true">${escapeHtml(slide.topic)}</div>
+                <div class="status-pill ${statusClass} reveal">${label}</div>
+                <h2 class="workflow-context-title reveal" data-editable="true">${escapeHtml(slide.title)}</h2>
+                <p class="workflow-context-body reveal" data-editable="true">${escapeHtml(slide.body)}</p>
+                <div class="workflow-context-example reveal" data-editable="true">${escapeHtml(slide.example)}</div>
+              </div>
+              <aside class="context-side-panel reveal">
+                <span>${label}</span>
+                <strong data-editable="true">${escapeHtml(slide.topic)} story</strong>
+                <p data-editable="true">${escapeHtml(contextNote)}</p>
+              </aside>
+            </div>
+            ${renderMeta(index)}
+          </section>
+        `;
+      }
+
+      return `
+        <section class="slide workflow-${escapeHtml(slide.state)}" data-slide="${index}">
+          <div class="proof-layout">
+            <div class="proof-header">
+              <div>
+                <div class="slide-kicker reveal" data-editable="true">${escapeHtml(slide.topic)}</div>
+                <div class="status-pill ${statusClass} reveal">${label}</div>
+                <h2 class="proof-title reveal" data-editable="true">${escapeHtml(slide.title)}</h2>
+              </div>
+              <p class="proof-subtitle reveal" data-editable="true">${escapeHtml(slide.hint)}</p>
+            </div>
+            <aside class="media-panel proof-media-panel reveal">
+              <div class="placeholder-content">
+                <div>
+                  <div class="placeholder-label">${proofLabel}</div>
+                  <div class="mini-ui" aria-hidden="true"><span></span><span></span><span></span></div>
+                </div>
+                <div>
+                  <div class="placeholder-name" data-editable="true">${escapeHtml(slide.asset)}</div>
+                  <p class="placeholder-hint" data-editable="true">${escapeHtml(slide.hint)}</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
+    function renderMeta(index) {
+      return `
+        <div class="meta-row">
+          <span>Codex Meetup JKT - Jun 2026</span>
+          <span class="page-number">${String(index + 1).padStart(2, "0")} / ${String(deckSlides.length).padStart(2, "0")}</span>
+        </div>
+      `;
+    }
+
+    function renderSlides() {
+      stage.innerHTML = deckSlides.map((slide, index) => {
+        if (slide.type === "title") return renderTitle(slide, index);
+        if (slide.type === "section") return renderSection(slide, index);
+        if (slide.type === "model") return renderModel(slide, index);
+        return renderWorkflow(slide, index);
+      }).join("");
+    }
+
+    /* ===========================================
+       SLIDE CONTROLLER
+       =========================================== */
+    class SlidePresentation {
+      constructor() {
+        this.currentSlide = 0;
+        this.stage = document.getElementById("deckStage");
+        this.counter = document.getElementById("slideCounter");
+        this.progress = document.getElementById("progressFill");
+        this.setupStageScale();
+        this.setupNavigation();
+        this.setupEditing();
+        this.showSlide(0);
+      }
+
+      get slides() {
+        return document.querySelectorAll(".slide");
+      }
+
+      setupStageScale() {
+        const scale = () => {
+          const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+          const x = (window.innerWidth - 1920 * factor) / 2;
+          const y = (window.innerHeight - 1080 * factor) / 2;
+          this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener("resize", scale);
+      }
+
+      setupNavigation() {
+        document.getElementById("prevBtn").addEventListener("click", () => this.prev());
+        document.getElementById("nextBtn").addEventListener("click", () => this.next());
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "e" || event.key === "E") return;
+          if (["ArrowRight", " ", "PageDown", "Enter"].includes(event.key)) {
+            event.preventDefault();
+            this.next();
+          }
+          if (["ArrowLeft", "PageUp", "Backspace"].includes(event.key)) {
+            event.preventDefault();
+            this.prev();
+          }
+          if (event.key === "Home") this.showSlide(0);
+          if (event.key === "End") this.showSlide(this.slides.length - 1);
+        });
+
+        let touchStartX = 0;
+        window.addEventListener("touchstart", (event) => {
+          touchStartX = event.changedTouches[0].screenX;
+        }, { passive: true });
+
+        window.addEventListener("touchend", (event) => {
+          const deltaX = event.changedTouches[0].screenX - touchStartX;
+          if (Math.abs(deltaX) < 52) return;
+          if (deltaX < 0) this.next();
+          else this.prev();
+        }, { passive: true });
+
+        let wheelLock = false;
+        window.addEventListener("wheel", (event) => {
+          if (wheelLock || Math.abs(event.deltaY) < 20) return;
+          wheelLock = true;
+          if (event.deltaY > 0) this.next();
+          else this.prev();
+          window.setTimeout(() => { wheelLock = false; }, 450);
+        }, { passive: true });
+      }
+
+      setupEditing() {
+        const editToggle = document.getElementById("editToggle");
+        const hotzone = document.getElementById("editHotzone");
+        let hideTimer;
+
+        const showToggle = () => {
+          clearTimeout(hideTimer);
+          editToggle.classList.add("show");
+        };
+        const hideToggle = () => {
+          hideTimer = window.setTimeout(() => {
+            if (!editToggle.classList.contains("active")) editToggle.classList.remove("show");
+          }, 400);
+        };
+
+        hotzone.addEventListener("mouseenter", showToggle);
+        hotzone.addEventListener("mouseleave", hideToggle);
+        editToggle.addEventListener("mouseenter", showToggle);
+        editToggle.addEventListener("mouseleave", hideToggle);
+        editToggle.addEventListener("click", () => this.toggleEditMode());
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "e" || event.key === "E") this.toggleEditMode();
+        });
+      }
+
+      toggleEditMode() {
+        const enabled = !document.body.classList.contains("editing");
+        document.body.classList.toggle("editing", enabled);
+        document.getElementById("editToggle").classList.toggle("active", enabled);
+        document.querySelectorAll("[data-editable='true']").forEach((node) => {
+          node.contentEditable = enabled ? "true" : "false";
+        });
+      }
+
+      showSlide(index) {
+        const allSlides = this.slides;
+        this.currentSlide = Math.max(0, Math.min(index, allSlides.length - 1));
+        allSlides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === this.currentSlide);
+          slide.classList.toggle("visible", i === this.currentSlide);
+        });
+        this.counter.textContent = `${this.currentSlide + 1} / ${allSlides.length}`;
+        this.progress.style.width = `${((this.currentSlide + 1) / allSlides.length) * 100}%`;
+        window.location.hash = `slide-${this.currentSlide + 1}`;
+      }
+
+      next() {
+        this.showSlide(this.currentSlide + 1);
+      }
+
+      prev() {
+        this.showSlide(this.currentSlide - 1);
+      }
+    }
+
+    renderSlides();
+    const presentation = new SlidePresentation();
+    window.presentation = presentation;
+
+    window.addEventListener("load", () => {
+      const match = window.location.hash.match(/slide-(\d+)/);
+      if (match) presentation.showSlide(Number(match[1]) - 1);
+    });
+  </script>
+</body>
+</html>
