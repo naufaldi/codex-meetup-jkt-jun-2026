@@ -49,3 +49,20 @@ Each slide uses the reference image with:
 ## Accessibility Rule
 
 Use white or near-white text over deep translucent blue panels. Avoid putting small text directly over bright image areas. When adding screenshots or videos, keep them inside the existing glass panels so contrast remains stable.
+
+## Workflow Slide Redesign
+
+Planning and PRD/RFC workflow slides should feel like live presentation slides, not article pages.
+
+- Density: low-density, speaker-led, one idea per slide.
+- Before Codex: scattered/manual flow with loose nodes, dashed connectors, and visible uncertainty.
+- After Codex: structured Codex-assisted flow with clear lanes, glowing connectors, and output chips.
+- Visual method: workflow diagrams must be generated with GPT Image Gen and saved as image assets. Generate diagram artwork only, not entire slide screenshots. Keep slide title, supporting copy, footer, counter, and layout as editable HTML/CSS. Do not draw workflow diagrams with HTML/CSS boxes or connector maps; CSS is only for layout, framing, typography, and image placement.
+- Reading order: big claim first, short support sentence second, diagram third.
+- Overflow rule: split content into additional slides instead of shrinking text below comfortable presentation size.
+
+Reference principles used for this redesign:
+
+- BrightCarbon visual hierarchy: guide the audience through ordered steps.
+- Figma presentation ideas: keep a cohesive two-tone visual system.
+- Storytelling With Data makeover: reduce clutter and make the main message obvious.

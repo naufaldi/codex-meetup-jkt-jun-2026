@@ -9,21 +9,46 @@ This deck uses the `frontend-slides` fixed-stage approach:
 - Single `index.html`
 - Fixed 1920x1080 slide stage
 - The whole stage scales to the viewport
+- Vite dev server for live reload while editing
 - Screenshots and videos can be added under `assets/`
 
 ## Open Locally
 
-Run from this folder:
+Install dependencies once:
 
 ```bash
-python3 -m http.server 4173
+npm install
+```
+
+Start the Vite dev server:
+
+```bash
+npm run dev
 ```
 
 Then open:
 
 ```text
-http://localhost:4173
+http://127.0.0.1:4173
 ```
+
+Vite watches the root `index.html` and asset files, then refreshes the browser when edits are saved. The deck stays a single HTML presentation; Vite is only the local dev and production build wrapper.
+
+## Build And Preview
+
+Build the static output:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+Netlify builds with `npm run build` and publishes `dist/`.
 
 ## Controls
 
@@ -37,6 +62,7 @@ http://localhost:4173
 
 ```text
 index.html
+package.json
 assets/
   coding/
   non-coding/

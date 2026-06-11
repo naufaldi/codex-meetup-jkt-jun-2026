@@ -1,0 +1,79 @@
+<svg width="1200" height="780" viewBox="0 0 1200 780" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1200" y2="780">
+      <stop stop-color="#F7F9FF" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#122396" stop-opacity=".08"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#D3DCF2" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#A5C5F5" stop-opacity=".09"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#101D79" flood-opacity=".34"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .label { font-family: "Plus Jakarta Sans", Arial, sans-serif; font-weight: 800; fill: #F7F9FF; font-size: 32px; }
+      .core { font-family: "Plus Jakarta Sans", Arial, sans-serif; font-weight: 800; fill: #FFFFFF; font-size: 38px; }
+      .body { font-family: "IBM Plex Sans", Arial, sans-serif; fill: #D7DEF8; font-size: 22px; }
+      .mono { font-family: "JetBrains Mono", monospace; fill: #E9EBFF; font-size: 17px; font-weight: 700; }
+      .line { stroke: #A5C5F5; stroke-width: 5; stroke-linecap: round; stroke-opacity: .78; filter: url(#glow); }
+    </style>
+  </defs>
+  <rect x="18" y="18" width="1164" height="744" fill="url(#panel)" stroke="#F7F9FF" stroke-opacity=".24"/>
+  <rect x="54" y="54" width="1092" height="672" stroke="#F7F9FF" stroke-opacity=".22" stroke-dasharray="4 6"/>
+  <circle cx="590" cy="360" r="230" fill="#D3DCF2" fill-opacity=".12" filter="url(#glow)"/>
+
+  <path d="M278 178 L470 312" class="line"/>
+  <path d="M278 340 L450 340" class="line"/>
+  <path d="M288 514 L468 390" class="line"/>
+  <path d="M710 340 L908 340" class="line"/>
+
+  <g filter="url(#shadow)">
+    <rect x="92" y="126" width="210" height="106" fill="url(#card)" stroke="#A5C5F5" stroke-opacity=".42"/>
+    <text x="118" y="172" class="label">PRD</text>
+    <text x="118" y="208" class="body">Intent</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="92" y="292" width="230" height="112" fill="url(#card)" stroke="#A5C5F5" stroke-opacity=".42"/>
+    <text x="118" y="338" class="label">Codebase</text>
+    <text x="118" y="374" class="body">Existing patterns</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="92" y="466" width="250" height="126" fill="url(#card)" stroke="#A5C5F5" stroke-opacity=".42"/>
+    <text x="118" y="514" class="label">RFC</text>
+    <text x="118" y="550" class="label">template</text>
+    <text x="118" y="584" class="body">Expected structure</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="456" y="276" width="280" height="150" fill="url(#card)" stroke="#A5C5F5" stroke-opacity=".70"/>
+    <text x="548" y="340" class="core">Codex</text>
+    <text x="528" y="382" class="body">Synthesize</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="880" y="264" width="280" height="160" fill="url(#card)" stroke="#A5C5F5" stroke-opacity=".48"/>
+    <text x="908" y="318" class="label">GitLab Wiki</text>
+    <text x="908" y="354" class="label">RFC</text>
+    <text x="908" y="394" class="body">Review-ready draft</text>
+  </g>
+
+  <g>
+    <rect x="78" y="684" width="54" height="38" fill="#A5C5F5" fill-opacity=".12" stroke="#A5C5F5" stroke-opacity=".38"/>
+    <text x="96" y="709" class="mono">API</text>
+    <rect x="146" y="684" width="48" height="38" fill="#A5C5F5" fill-opacity=".12" stroke="#A5C5F5" stroke-opacity=".38"/>
+    <text x="164" y="709" class="mono">UI</text>
+    <rect x="208" y="684" width="114" height="38" fill="#A5C5F5" fill-opacity=".12" stroke="#A5C5F5" stroke-opacity=".38"/>
+    <text x="226" y="709" class="mono">Data flow</text>
+    <rect x="336" y="684" width="80" height="38" fill="#A5C5F5" fill-opacity=".12" stroke="#A5C5F5" stroke-opacity=".38"/>
+    <text x="354" y="709" class="mono">Risks</text>
+    <rect x="430" y="684" width="190" height="38" fill="#A5C5F5" fill-opacity=".12" stroke="#A5C5F5" stroke-opacity=".38"/>
+    <text x="448" y="709" class="mono">Acceptance criteria</text>
+    <rect x="634" y="684" width="86" height="38" fill="#A5C5F5" fill-opacity=".12" stroke="#A5C5F5" stroke-opacity=".38"/>
+    <text x="652" y="709" class="mono">Rollout</text>
+  </g>
+</svg>

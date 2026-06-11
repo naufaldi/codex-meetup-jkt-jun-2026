@@ -378,6 +378,57 @@
       font-weight: 700;
     }
 
+    .bio-slide {
+      display: grid;
+      grid-template-columns: minmax(0, 760px) minmax(0, 1fr);
+      gap: 76px;
+      align-items: center;
+    }
+
+    .bio-slide h1 {
+      max-width: 740px;
+      font-size: 96px;
+      line-height: 0.98;
+    }
+
+    .bio-roles {
+      margin-top: 44px;
+      display: grid;
+      gap: 22px;
+      max-width: 680px;
+    }
+
+    .bio-roles span {
+      display: block;
+      padding: 24px 28px;
+      border-left: 5px solid var(--after);
+      background: linear-gradient(135deg, rgba(247, 249, 255, 0.14), rgba(18, 35, 150, 0.26));
+      color: var(--soft);
+      font-size: 34px;
+      line-height: 1.2;
+      box-shadow: 0 18px 70px rgba(36, 44, 172, 0.20);
+      backdrop-filter: blur(14px);
+    }
+
+    .bio-card {
+      position: relative;
+      height: 620px;
+      border: 1px solid rgba(247, 249, 255, 0.24);
+      background: linear-gradient(145deg, rgba(247, 249, 255, 0.16), rgba(18, 35, 150, 0.32));
+      box-shadow: 0 30px 110px rgba(36, 44, 172, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .bio-card img {
+      position: absolute;
+      inset: 36px;
+      width: calc(100% - 72px);
+      height: calc(100% - 72px);
+      object-fit: contain;
+      filter: drop-shadow(0 24px 48px rgba(18, 35, 150, 0.30));
+    }
+
     .section-slide {
       display: grid;
       align-content: center;
@@ -488,6 +539,84 @@
       line-height: 1.38;
     }
 
+    .workflow-visual-layout {
+      height: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 674px);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .workflow-visual-copy {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .workflow-visual-title {
+      margin-top: 32px;
+      max-width: 920px;
+      font-size: 78px;
+      line-height: 1;
+    }
+
+    .workflow-visual-body {
+      margin-top: 28px;
+      max-width: 840px;
+      color: var(--soft);
+      font-size: 31px;
+      line-height: 1.32;
+      text-shadow: 0 2px 28px rgba(21, 35, 130, 0.55);
+    }
+
+    .workflow-visual-example {
+      margin-top: 34px;
+      max-width: 760px;
+      padding: 24px 26px;
+      border-left: 5px solid var(--before);
+      background: linear-gradient(135deg, rgba(228, 227, 243, 0.14), rgba(18, 35, 150, 0.28));
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1.32;
+      box-shadow: 0 18px 70px rgba(36, 44, 172, 0.20);
+      backdrop-filter: blur(14px);
+    }
+
+    .workflow-after .workflow-visual-example {
+      border-left-color: var(--after);
+      background: linear-gradient(135deg, rgba(165, 197, 245, 0.22), rgba(93, 97, 234, 0.18));
+    }
+
+    .workflow-visual-stage {
+      position: relative;
+      height: 520px;
+      border: 1px solid rgba(247, 249, 255, 0.22);
+      background:
+        linear-gradient(145deg, rgba(247, 249, 255, 0.12), rgba(18, 35, 150, 0.30)),
+        radial-gradient(circle at 62% 28%, rgba(211, 220, 242, 0.24), transparent 34%);
+      box-shadow: 0 26px 100px rgba(36, 44, 172, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .workflow-visual-stage::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px dashed rgba(247, 249, 255, 0.20);
+      pointer-events: none;
+    }
+
+    .workflow-visual-stage img {
+      position: absolute;
+      inset: 22px;
+      width: calc(100% - 44px);
+      height: calc(100% - 44px);
+      object-fit: contain;
+      filter: drop-shadow(0 24px 48px rgba(18, 35, 150, 0.28));
+    }
+
     .proof-layout {
       height: 100%;
       display: grid;
@@ -530,6 +659,23 @@
     .proof-media-panel .placeholder-hint {
       max-width: 1120px;
       font-size: 32px;
+    }
+
+    .proof-image-grid {
+      position: absolute;
+      inset: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .media-panel .proof-image-grid img {
+      position: static;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: rgba(21, 35, 130, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.16);
     }
 
     .status-pill {
@@ -696,6 +842,41 @@
       color: var(--muted);
       font-size: 25px;
       line-height: 1.35;
+    }
+
+    .app-image-slide {
+      padding: 64px 88px;
+    }
+
+    .app-image-media {
+      position: relative;
+      height: 900px;
+      border: 1px solid rgba(247, 249, 255, 0.24);
+      background: linear-gradient(145deg, rgba(247, 249, 255, 0.16), rgba(18, 35, 150, 0.32));
+      box-shadow: 0 30px 110px rgba(36, 44, 172, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .app-image-media img {
+      position: absolute;
+      inset: 28px;
+      width: calc(100% - 56px);
+      height: calc(100% - 56px);
+      object-fit: contain;
+      filter: drop-shadow(0 24px 48px rgba(18, 35, 150, 0.28));
+    }
+
+    .empty-image-slide {
+      padding: 64px 88px;
+    }
+
+    .empty-image-media {
+      height: 900px;
+      border: 1px dashed rgba(247, 249, 255, 0.24);
+      background: linear-gradient(145deg, rgba(247, 249, 255, 0.10), rgba(18, 35, 150, 0.24));
+      box-shadow: 0 30px 110px rgba(36, 44, 172, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
     }
 
     .image-model-slide .model-grid {
@@ -885,6 +1066,16 @@
         terminal: ["$ codex start", "> connect context", "> use tools", "> verify result", "<b>work becomes a system</b>"]
       },
       {
+        type: "bio",
+        kicker: "About me",
+        name: "Naufaldi Rafif Satriya",
+        roles: [
+          "Software Engineer in FMCG",
+          "Codex Ambassador Jakarta, Indonesia"
+        ],
+        image: "assets/profile/codex-profile-card.png"
+      },
+      {
         type: "model",
         kicker: "Mental model",
         title: "Codex is not only a coding chatbot.",
@@ -896,27 +1087,44 @@
           ["Verification", "Codex can check output with tests, browser, screenshots, or evidence."]
         ]
       },
+      {
+        type: "appImage",
+        kicker: "Codex app",
+        image: "assets/mental-model/codex-personalization.png",
+        caption: "Codex app: preferences, custom instructions, memory, tools, and connected work context."
+      },
       section("01", "Coding / Software Engineer", "Use Codex across the SDLC, not only inside the editor."),
-      pair("Planning", "before", "Planning depends on manual discovery.", "We discuss PRD, KPI, user problem, and backlog. But codebase reality often depends on who remembers what.", "Example: we enter planning with ideas from meetings, but not always with fresh codebase evidence.", "planning-manual-context.png", "PRD, KPI notes, backlog, and scattered tabs"),
-      pair("Planning", "after", "Planning starts with prepared signals.", "Codex scans the codebase, product docs, and previous work to suggest improvements before the meeting.", "Example: weekly automation prepares engineering improvement ideas and possible business opportunities.", "planning-automation-ideas.png", "Codex automation output for planning ideas"),
-      pair("PRD / RFC", "before", "RFC writing is slow and inconsistent.", "Engineers manually read PRD, search existing patterns, and write technical proposal from scratch.", "Example: important edge cases can be missed because the writer does not have all context open.", "prd-rfc-manual.png", "Manual PRD reading and blank RFC document"),
-      pair("PRD / RFC", "after", "Codex drafts RFC from real context.", "Codex reads PRD, existing RFC templates, related code, and creates a first RFC draft for review.", "Example: ask Codex to map product intent into API, UI, data flow, risks, and acceptance criteria.", "prd-rfc-codex-draft.png", "Codex-generated RFC draft with template"),
-      pair("Task Breakdown", "before", "Task breakdown depends on manual judgment.", "We split PRD/RFC into tasks, estimate effort, add labels, and define done criteria by hand.", "Example: different engineers may create very different task quality from the same PRD.", "task-breakdown-manual.png", "Manual GitHub or GitLab issue creation"),
-      pair("Task Breakdown", "after", "Codex creates structured implementation tasks.", "Codex turns RFC into GitHub/GitLab issues with labels, acceptance criteria, dependencies, and DoD.", "Example: prompt Codex to create frontend, backend, test, docs, and rollout tasks from one RFC.", "task-breakdown-codex.png", "Generated GitHub or GitLab task list"),
-      pair("Daily Work", "before", "Daily planning relies on memory.", "Standup is yesterday, today, blockers. But the real repo and issue state may already have changed.", "Example: we choose work based on habit instead of current branch, MR, or CI status.", "daily-manual-standup.png", "Manual standup notes and task board"),
-      pair("Daily Work", "after", "Codex helps choose the next useful task.", "Daily automation summarizes yesterday, checks open work, and recommends what to pick today.", "Example: Codex can inspect task state and create a goal for the selected work.", "daily-codex-goal.png", "Codex daily automation or goal setup"),
-      pair("Guardrails", "before", "Vague prompts produce risky work.", "A task like fix this feature lacks business context, technical constraints, and verification rules.", "Example: the agent can change code, but not necessarily the right behavior.", "guardrail-vague-prompt.png", "Short prompt with missing context"),
-      pair("Guardrails", "after", "A good prompt gives Codex the work boundary.", "Give Codex PRD/RFC, GitHub/GitLab task, route, browser verification, and test expectations.", "Example: base this on the RFC, work only on this issue, verify with browser, then summarize evidence.", "guardrail-complete-prompt.png", "Complete guardrailed prompt screenshot"),
-      pair("Implementation", "before", "Implementation starts with file hunting.", "Engineer searches routes, components, APIs, state, tests, and existing patterns manually.", "Example: most time is often spent rebuilding context, not writing the final code.", "implementation-file-search.png", "Manual file search and editor tabs"),
-      pair("Implementation", "after", "Codex traces the codebase and edits in scope.", "Codex reads the relevant files, explains the plan, applies a focused change, and keeps within boundaries.", "Example: ask Codex to inspect current implementation before changing anything.", "implementation-codex-diff.png", "Codex diff or terminal implementation screenshot"),
-      pair("Debugging", "before", "Debugging can become patch-by-error.", "We see the visible symptom and patch the nearest error message without tracing the full flow.", "Example: frontend shows wrong state, but root cause may be API shape, cache, auth, or data model.", "debugging-symptom.png", "Bug screenshot and console error"),
-      pair("Debugging", "after", "Codex traces from symptom to root cause.", "Codex separates user behavior, frontend state, backend response, data flow, and infra when needed.", "Example: ask Codex to explain root cause before patching, then verify the real behavior.", "debugging-root-cause.png", "Codex root-cause analysis screenshot"),
-      pair("Testing", "before", "Testing often happens late.", "Manual testing and broad test commands can be slow, flaky, or skipped under deadline pressure.", "Example: run everything only after many changes, then failures are harder to understand.", "testing-late.png", "Manual test checklist or failing terminal"),
-      pair("Testing", "after", "Codex runs focused verification.", "Codex picks tests close to the changed behavior, fixes failures, and reports exact evidence.", "Example: unit test for logic, browser check for UI, command output for implementation proof.", "testing-focused-verification.png", "Focused test output and browser check"),
-      pair("MR / Review / Deploy", "before", "MR prep is mostly manual.", "Engineer writes title, summary, screenshots, risk notes, test evidence, and deploy checklist by hand.", "Example: reviewers spend time asking for context that could be in the MR description.", "mr-manual-summary.png", "Manual merge request draft"),
-      pair("MR / Review / Deploy", "after", "Codex prepares review-ready context.", "Codex summarizes diff, writes MR description, checks CI status, and highlights rollout risk.", "Example: generate what changed, why, how verified, and what reviewers should focus on.", "mr-codex-review-ready.png", "Codex MR summary or review output"),
-      pair("Sprint Review / Retro", "before", "Review and retro depend on memory.", "We reconstruct what shipped, what blocked us, and what to improve from scattered updates.", "Example: repeated blockers are easy to miss when the sprint is busy.", "retro-memory.png", "Manual retro notes"),
-      pair("Sprint Review / Retro", "after", "Codex turns work history into learning.", "Codex summarizes shipped work, demos, blockers, follow-ups, and engineering lessons.", "Example: sprint review script plus retro themes from issues, MRs, and notes.", "retro-codex-summary.png", "Codex sprint review or retro summary"),
+      pair("Planning", "before", "Scattered planning hides impact.", "Meeting notes, Notion pages, and GitLab Wiki capture intent, but feature impact stays spread across code and memory.", "A small request can still touch flows, APIs, permissions, and old behavior.", "planning-scattered-context.png", "Meeting notes, Notion pages, GitLab Wiki, and unknown codebase impact", visual("scatter", "assets/coding/planning-before-diagram.png", "Scattered planning context diagram"), undefined, true),
+      pair("Planning", "after", "Codex turns PRD into impact.", "Codex reads the PRD against the repo, then prepares impact notes, RFC material, tradeoffs, and questions for discussion.", "Ask for affected files, impacted features, pros and cons, open questions, and weekly initiative ideas.", "planning-codex-impact-map.png", "Codex PRD impact map, RFC draft, tradeoffs, and engineering initiative ideas", visual("impact", "assets/coding/planning-after-diagram.png", "Codex-assisted PRD impact map diagram"), "assets/coding/planning-codex-trd-prompt.png"),
+      pair("PRD / RFC", "before", "RFC starts with scattered context.", "Engineers connect PRD intent, code, API behavior, UI states, data rules, rollout risk, and old decisions by hand.", "The RFC can look complete while hidden edge cases stay outside the proposal.", "prd-rfc-manual.png", "Manual PRD reading, scattered product and code context, and hidden edge cases", visual("stack", "assets/coding/prd-rfc-before-diagram-v2.png", "Scattered RFC context and hidden edge cases diagram"), undefined, true),
+      pair("PRD / RFC", "after", "Codex turns scattered context into an RFC draft.", "Codex reads the PRD, codebase, template, and prior decisions, then drafts a proposal that is easier to review.", "Ask Codex to cover acceptance criteria, edge cases, rollout, possible errors, and reviewer notes before editing the GitLab Wiki.", "prd-rfc-codex-draft.png", "Codex-generated RFC draft with template, acceptance criteria, edge cases, rollout, possible errors, and reviewer notes", visual("pipeline", "assets/coding/prd-rfc-after-diagram-v2.png", "Codex draft RFC pipeline with reviewer-ready sections"), "assets/coding/prd-rfc-codex-draft.png"),
+      pair("Task Breakdown", "before", "Task breakdown becomes manual project planning.", "Engineers split the RFC into tasks, choose labels, estimate effort, decide what comes first, and define done criteria by hand.", "Manual breakdown creates inconsistent task quality, unclear priority, missing dependencies, and repeated planning labor.", "task-breakdown-manual.png", "Manual task breakdown with labels, effort estimation, task order, and manual labor problems", visual("scatter", "assets/coding/task-breakdown-before-diagram-v2.png", "Manual task breakdown problems diagram"), undefined, true),
+      pair("Task Breakdown", "after", "Codex turns the RFC into issue-ready tasks.", "Codex reads the RFC and prepares GitHub issues with labels, user stories, DoD, dependencies, and suggested work order.", "Ask Codex to note parallel work, connected tasks, first/last sequence, and tracking details for each implementation issue.", "task-breakdown-codex.png", "Codex-generated GitHub issue-ready tasks with labels, dependencies, DoD, and work order", visual("impact", "assets/coding/task-breakdown-github-issues.png", "Codex creates GitHub issue tracking from RFC"), "assets/coding/task-breakdown-codex.png", false, "assets/coding/task-breakdown-github-issues.png"),
+      {
+        type: "section",
+        number: "!",
+        kicker: "Emergency work",
+        title: "What happens when an emergency task arrives?",
+        lead: "First, Codex helps inspect the message context before we decide what to do."
+      },
+      {
+        type: "appImage",
+        kicker: "Emergency work",
+        image: "assets/coding/emergency-task-codex-teams.png",
+        caption: "Codex prompt for checking Microsoft Teams context and creating GitHub issues from an emergency task."
+      },
+      pair("Daily Work", "before", "Daily planning relies on stale memory.", "Standup asks yesterday, today, and blockers, but the real repo, MR, issue, and chat state may already have changed.", "Without fresh evidence, we pick work by habit and can miss blockers, stale issues, or the highest-impact task.", "daily-manual-standup.png", "Manual daily planning with stale memory, open issues, MR status, commits, chat, and blockers", visual("scatter", "assets/coding/daily-work-before-diagram-v2.png", "Daily planning before Codex with scattered status and blockers"), undefined, true),
+      pair("Daily Work", "after", "Codex automation prepares the daily brief.", "Codex checks the last 24h commits and MRs, scans blockers, reads open issues, and recommends the useful task for today.", "Use automation to start the day with evidence: what changed, what is blocked, what issue matters next, and what to report.", "daily-codex-goal.png", "Codex daily automation prompt for commits, MRs, blockers, and issue-based task selection", undefined, "assets/coding/daily-work-codex-automation.png"),
+      pair("Implementation", "before", "Implementation can become a full day of manual work.", "Engineers hunt routes, components, APIs, state, tests, code style, and existing patterns before the real change starts.", "Manual implementation spends too much time rebuilding context, deciding where to edit, and keeping standards consistent.", "implementation-file-search.png", "Manual implementation with file hunting, context rebuilding, style drift, and daily time cost", visual("scatter", "assets/coding/implementation-before-diagram-v2.png", "Manual implementation before Codex diagram"), undefined, true),
+      pair("Implementation", "after", "Codex works from the task context.", "Give Codex the RFC or issue, the target work, and the coding standard, then let it inspect, plan, and implement in scope.", "Codex becomes the working partner: it follows project rules, keeps the change bounded, and can turn daily setup work into hours.", "implementation-codex-diff.png", "Codex implementation prompt with RFC task, related issues, and coding standard", undefined, "assets/coding/implementation-codex-task-prompt.png"),
+      pair("Debugging", "before", "Debugging can become patch-by-error.", "We see the visible symptom, patch the nearest error, and only later discover the real cause was deeper in the flow.", "The problem may live in API shape, cache, auth, data model, or runtime behavior, but manual tracing can stop too early.", "debugging-symptom.png", "Patch-by-error debugging with unclear root cause", visual("scatter", "assets/coding/debugging-before-diagram-v2.png", "Minimal debugging before Codex diagram"), undefined, true),
+      pair("Debugging", "after", "Codex helps trace the issue before patching.", "Codex reads logs, code paths, and symptoms to find likely causes, recommend next checks, and propose how to solve it.", "Ask for possible problems, three solution options, pros and cons, the recommended fix, and why that fix is safest.", "debugging-root-cause.png", "Codex debugging prompt for root cause, recommendations, possible problems, and solution tradeoffs", undefined, "assets/coding/debugging-codex-root-cause-prompt.png"),
+      pair("Testing", "before", "Testing often happens too late.", "Manual QA and broad test commands can be slow, flaky, or skipped when the deadline is close.", "Late testing makes failures harder to trace because UI flow, API behavior, state, and data have already changed together.", "testing-late.png", "Manual QA with late testing, broad commands, flaky results, and missed browser proof", visual("scatter", "assets/coding/testing-before-diagram-v2.png", "Minimal testing before Codex diagram"), undefined, true),
+      pair("Testing", "after", "Codex turns testing into guided QA.", "Codex can use Computer Use or Chrome control for end-to-end browser testing, then report exact proof from the real flow.", "Use E2E for the main user journey, and add frontend or backend unit tests when a smaller contract needs protection.", "testing-focused-verification.png", "Codex end-to-end browser testing with Computer Use or Chrome control and QA proof", undefined, "assets/coding/testing-codex-e2e-browser.png"),
+      pair("MR / Review / Deploy", "before", "MR prep is manual and inconsistent.", "Engineers write the MR title, description, issue links, screenshots, test proof, and risk notes by hand.", "Without a standard prompt, MR names vary, descriptions miss context, and reviewers ask for evidence that already exists elsewhere.", "mr-manual-summary.png", "Manual MR prep with inconsistent title, missing issue link, scattered proof, and nonstandard description", visual("scatter", "assets/coding/mr-before-diagram-v2.png", "Minimal MR prep before Codex diagram"), undefined, true),
+      pair("MR / Review / Deploy", "after", "Codex creates the MR from the work evidence.", "Prompt Codex to create the MR, link the related GitHub issues, write the description, and attach screenshots from previous proof.", "Codex turns diff, issue context, test evidence, screenshots, and risk notes into review-ready MR context.", "mr-codex-review-ready.png", "Codex MR creation with linked GitHub issues, generated description, screenshots, and evidence", undefined, "assets/coding/mr-codex-create-pr.png", false, "assets/coding/mr-codex-created-pr.png"),
+      pair("Sprint Review / Retro", "before", "Weekly reports depend on memory.", "We reconstruct shipped work, incidents, reviews, rollouts, and blockers from scattered updates after the week is already busy.", "Manual reporting is slow, misses context, and makes it harder to remember what should improve next sprint.", "retro-memory.png", "Manual weekly report reconstruction with scattered MRs, commits, incidents, reviews, rollouts, and blockers", visual("scatter", "assets/coding/retro-before-diagram-v2.png", "Minimal weekly report before Codex diagram"), undefined, true),
+      pair("Sprint Review / Retro", "after", "Codex automates the weekly report.", "A weekly automation scans PRs, rollouts, incidents, reviews, and code changes, then turns them into a fast engineering summary.", "Use Codex to recall what happened, restructure the report, include fallback source references, and improve reporting quality.", "retro-codex-summary.png", "Codex weekly engineering summary automation for fast reporting and work-history recall", undefined, "assets/coding/retro-codex-weekly-automation.png"),
       section("02", "Non-Coding Workflows", "The same agentic pattern works outside software engineering."),
       {
         type: "model",
@@ -974,7 +1182,7 @@
       return { type: "section", number, kicker: "Section", title, lead };
     }
 
-    function pair(topic, state, title, body, example, asset, hint) {
+    function pair(topic, state, title, body, example, asset, hint, visual, proofImage, skipProof = false, proofImageSecondary) {
       return {
         type: "workflow",
         topic,
@@ -983,13 +1191,22 @@
         body,
         example,
         asset,
-        hint
+        hint,
+        visual,
+        proofImage,
+        skipProof,
+        proofImageSecondary
       };
+    }
+
+    function visual(kind, image, alt) {
+      return { kind, image, alt };
     }
 
     function expandSlides(sourceSlides) {
       return sourceSlides.flatMap((slide) => {
         if (slide.type !== "workflow") return [slide];
+        if (slide.skipProof) return [{ ...slide, view: "context" }];
         return [
           { ...slide, view: "context" },
           { ...slide, view: "proof" }
@@ -1044,6 +1261,44 @@
       `;
     }
 
+    function renderBio(slide, index) {
+      return `
+        <section class="slide bio-slide" data-slide="${index}">
+          <div>
+            <div class="slide-kicker reveal" data-editable="true">${escapeHtml(slide.kicker)}</div>
+            <h1 class="reveal" data-editable="true">${escapeHtml(slide.name)}</h1>
+            <div class="bio-roles reveal">
+              ${slide.roles.map((role) => `<span data-editable="true">${escapeHtml(role)}</span>`).join("")}
+            </div>
+          </div>
+          <aside class="bio-card reveal">
+            <img src="${escapeHtml(slide.image)}" alt="Codex profile card for ${escapeHtml(slide.name)}">
+          </aside>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
+    function renderAppImage(slide, index) {
+      return `
+        <section class="slide app-image-slide" data-slide="${index}">
+          <aside class="app-image-media reveal">
+            <img src="${escapeHtml(slide.image)}" alt="${escapeHtml(slide.caption)}">
+          </aside>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
+    function renderEmptyImage(slide, index) {
+      return `
+        <section class="slide empty-image-slide" data-slide="${index}">
+          <aside class="empty-image-media reveal"></aside>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
     function renderModel(slide, index) {
       const imageMarkup = slide.image
         ? `<div class="media-panel reveal" style="margin-top: 28px; height: 260px;"><img src="${escapeHtml(slide.image)}" alt="Codex plugins screenshot"></div>`
@@ -1068,6 +1323,30 @@
       `;
     }
 
+    function renderVisualWorkflow(slide, index) {
+      const isAfter = slide.state === "after";
+      const statusClass = isAfter ? "status-after" : "status-before";
+      const label = isAfter ? "After Codex" : "Before Codex";
+
+      return `
+        <section class="slide workflow-${escapeHtml(slide.state)} workflow-visual-slide workflow-visual-${escapeHtml(slide.visual.kind)}" data-slide="${index}">
+          <div class="workflow-visual-layout">
+            <div class="workflow-visual-copy">
+              <div class="slide-kicker reveal" data-editable="true">${escapeHtml(slide.topic)}</div>
+              <div class="status-pill ${statusClass} reveal">${label}</div>
+              <h2 class="workflow-visual-title reveal" data-editable="true">${escapeHtml(slide.title)}</h2>
+              <p class="workflow-visual-body reveal" data-editable="true">${escapeHtml(slide.body)}</p>
+              <div class="workflow-visual-example reveal" data-editable="true">${escapeHtml(slide.example)}</div>
+            </div>
+            <aside class="workflow-visual-stage reveal" aria-label="${escapeHtml(slide.hint)}">
+              <img src="${escapeHtml(slide.visual.image)}" alt="${escapeHtml(slide.visual.alt)}">
+            </aside>
+          </div>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
     function renderWorkflow(slide, index) {
       const isAfter = slide.state === "after";
       const statusClass = isAfter ? "status-after" : "status-before";
@@ -1078,6 +1357,8 @@
         : "What slows the work down when context, tools, and proof stay scattered.";
 
       if (slide.view === "context") {
+        if (slide.visual) return renderVisualWorkflow(slide, index);
+
         return `
           <section class="slide workflow-${escapeHtml(slide.state)}" data-slide="${index}">
             <div class="workflow-context-layout">
@@ -1099,6 +1380,24 @@
         `;
       }
 
+      const proofMedia = slide.proofImageSecondary
+        ? `<div class="proof-image-grid">
+            <img src="${escapeHtml(slide.proofImage)}" alt="${escapeHtml(slide.hint)}">
+            <img src="${escapeHtml(slide.proofImageSecondary)}" alt="${escapeHtml(slide.hint)}">
+          </div>`
+        : slide.proofImage
+          ? `<img src="${escapeHtml(slide.proofImage)}" alt="${escapeHtml(slide.hint)}">`
+        : `<div class="placeholder-content">
+            <div>
+              <div class="placeholder-label">${proofLabel}</div>
+              <div class="mini-ui" aria-hidden="true"><span></span><span></span><span></span></div>
+            </div>
+            <div>
+              <div class="placeholder-name" data-editable="true">${escapeHtml(slide.asset)}</div>
+              <p class="placeholder-hint" data-editable="true">${escapeHtml(slide.hint)}</p>
+            </div>
+          </div>`;
+
       return `
         <section class="slide workflow-${escapeHtml(slide.state)}" data-slide="${index}">
           <div class="proof-layout">
@@ -1111,16 +1410,7 @@
               <p class="proof-subtitle reveal" data-editable="true">${escapeHtml(slide.hint)}</p>
             </div>
             <aside class="media-panel proof-media-panel reveal">
-              <div class="placeholder-content">
-                <div>
-                  <div class="placeholder-label">${proofLabel}</div>
-                  <div class="mini-ui" aria-hidden="true"><span></span><span></span><span></span></div>
-                </div>
-                <div>
-                  <div class="placeholder-name" data-editable="true">${escapeHtml(slide.asset)}</div>
-                  <p class="placeholder-hint" data-editable="true">${escapeHtml(slide.hint)}</p>
-                </div>
-              </div>
+              ${proofMedia}
             </aside>
           </div>
           ${renderMeta(index)}
@@ -1140,6 +1430,9 @@
     function renderSlides() {
       stage.innerHTML = deckSlides.map((slide, index) => {
         if (slide.type === "title") return renderTitle(slide, index);
+        if (slide.type === "bio") return renderBio(slide, index);
+        if (slide.type === "appImage") return renderAppImage(slide, index);
+        if (slide.type === "emptyImage") return renderEmptyImage(slide, index);
         if (slide.type === "section") return renderSection(slide, index);
         if (slide.type === "model") return renderModel(slide, index);
         return renderWorkflow(slide, index);
@@ -1158,7 +1451,7 @@
         this.setupStageScale();
         this.setupNavigation();
         this.setupEditing();
-        this.showSlide(0);
+        this.showSlide(getSlideIndexFromHash() ?? 0);
       }
 
       get slides() {
@@ -1276,9 +1569,20 @@
     const presentation = new SlidePresentation();
     window.presentation = presentation;
 
-    window.addEventListener("load", () => {
+    function getSlideIndexFromHash() {
       const match = window.location.hash.match(/slide-(\d+)/);
-      if (match) presentation.showSlide(Number(match[1]) - 1);
+      if (!match) return null;
+      return Number(match[1]) - 1;
+    }
+
+    window.addEventListener("load", () => {
+      const slideIndex = getSlideIndexFromHash();
+      if (slideIndex !== null) presentation.showSlide(slideIndex);
+    });
+
+    window.addEventListener("hashchange", () => {
+      const slideIndex = getSlideIndexFromHash();
+      if (slideIndex !== null) presentation.showSlide(slideIndex);
     });
   </script>
 </body>
