@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4173",
-    "build": "vite build",
+    "build": "vite build && mkdir -p dist/assets && cp -R assets/. dist/assets/",
     "preview": "vite preview --host 127.0.0.1 --port 4173"
   },
   "devDependencies": {
