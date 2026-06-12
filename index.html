@@ -1232,7 +1232,7 @@
         caption: "Codex prompt for checking Microsoft Teams context and creating GitHub issues from an emergency task."
       },
       pair("Daily Work", "before", "Daily planning relies on stale memory.", "Standup asks yesterday, today, and blockers, but the real repo, MR, issue, and chat state may already have changed.", "Without fresh evidence, we pick work by habit and can miss blockers, stale issues, or the highest-impact task.", "daily-manual-standup.png", "Manual daily planning with stale memory, open issues, MR status, commits, chat, and blockers", visual("scatter", "assets/coding/daily-work-before-diagram-v2.png", "Daily planning before Codex with scattered status and blockers"), undefined, true),
-      pair("Daily Work", "after", "Codex automation prepares the daily brief.", "Codex checks the last 24h commits and MRs, scans blockers, reads open issues, and recommends the useful task for today.", "Use automation to start the day with evidence: what changed, what is blocked, what issue matters next, and what to report.", "daily-codex-goal.png", "Codex daily automation prompt for commits, MRs, blockers, and issue-based task selection", undefined, "assets/coding/daily-work-codex-automation.png"),
+      pair("Daily Work", "after", "Codex automation prepares the daily brief.", "Codex checks the last 24h commits and MRs, scans blockers, reads open issues, and recommends the useful task for today.", "Use automation to start the day with evidence: what changed, what is blocked, what issue matters next, and what to report.", "daily-codex-goal.png", "Codex daily automation prompt for commits, MRs, blockers, and issue-based task selection", undefined, "assets/coding/daily-work-codex-automation-v2.png"),
       pair("Implementation", "before", "Implementation can become a full day of manual work.", "Engineers hunt routes, components, APIs, state, tests, code style, and existing patterns before the real change starts.", "Manual implementation spends too much time rebuilding context, deciding where to edit, and keeping standards consistent.", "implementation-file-search.png", "Manual implementation with file hunting, context rebuilding, style drift, and daily time cost", visual("scatter", "assets/coding/implementation-before-diagram-v2.png", "Manual implementation before Codex diagram"), undefined, true),
       pair("Implementation", "after", "Codex works from the task context.", "Give Codex the RFC or issue, the target work, and the coding standard, then let it inspect, plan, and implement in scope.", "Codex becomes the working partner: it follows project rules, keeps the change bounded, and can turn daily setup work into hours.", "implementation-codex-diff.png", "Codex implementation prompt with RFC task, related issues, and coding standard", undefined, "assets/coding/implementation-codex-task-prompt.png"),
       pair("Debugging", "before", "Debugging can become patch-by-error.", "We see the visible symptom, patch the nearest error, and only later discover the real cause was deeper in the flow.", "The problem may live in API shape, cache, auth, data model, or runtime behavior, but manual tracing can stop too early.", "debugging-symptom.png", "Patch-by-error debugging with unclear root cause", visual("scatter", "assets/coding/debugging-before-diagram-v2.png", "Minimal debugging before Codex diagram"), undefined, true),
@@ -1295,28 +1295,41 @@
       },
       pair("Meeting / Report", "before", "Reports start with context hunting.", "Before writing notes or a report, we manually open Notion, email, chat, Drive, spreadsheets, and old meeting notes.", "The work becomes puzzle assembly: finding progress, decisions, blockers, numbers, and evidence before the actual report starts.", "meeting-manual-context.png", "Manual meeting report context hunting across notes, email, chat, Drive, and spreadsheets", visual("scatter", "assets/non-coding/meeting-report-before-diagram-v2.png", "Minimal meeting report before Codex diagram"), undefined, true),
       pair("Meeting / Report", "after", "Codex assembles the report puzzle.", "Ask Codex to gather context from the connected tools, plan the notes, surface decisions and blockers, and draft the report.", "Use it to turn scattered updates into progress this week, important decisions, open blockers, evidence, and a sendable summary.", "meeting-codex-brief.png", "Codex prompt for gathering context and drafting a team report from connected tools", undefined, "assets/non-coding/meeting-report-codex-team-report-prompt.png"),
-      pair("Research / Learning", "before", "Learning gets trapped in many tabs.", "You read docs, articles, videos, and notes, but the useful takeaways are scattered.", "Example: after an hour of reading, it is hard to explain what changed in your thinking.", "research-many-tabs.png", "Many research tabs and notes"),
-      pair("Research / Learning", "after", "Codex turns sources into learning notes.", "Codex summarizes, compares, extracts tradeoffs, and creates a concise learning note.", "Example: ask for what matters, what to try next, and what risk to watch.", "research-learning-note.png", "Codex research summary"),
-      pair("Computer Use", "before", "Some workflows still need clicking.", "Forms, dashboards, browser tools, and apps require manual navigation and repeated checks.", "Example: you know what to do, but still need to operate the interface step by step.", "computer-use-manual.png", "Manual app or browser clicking"),
-      pair("Computer Use", "after", "Codex can operate and verify workflows.", "With Computer Use or Chrome, Codex can inspect screens, click, type, and confirm the result.", "Example: ask Codex to open a page, perform a workflow, and capture proof.", "computer-use-codex.png", "Codex operating browser or app"),
-      {
-        type: "model",
-        kicker: "What changes",
-        title: "Before: manual context switching. After: a repeatable work system.",
-        lead: "Codex is strongest when you give it context, tools, guardrails, and a verification target.",
-        cards: [
-          ["Before", "Search manually, copy context, guess next step, verify late."],
-          ["After", "Prepare context, run workflow, produce output, verify evidence."],
-          ["Better prompt", "Role, source context, task boundary, expected output, verification."],
-          ["Better system", "Project, skill, plugin, automation, browser proof."]
-        ]
-      },
+      pair("Research / Learning", "before", "Learning gets stuck in consumption.", "You collect papers, docs, videos, articles, and notes, but the lesson is not yet connected into a mental model.", "Example: after reading, the hard question is whether you can teach it back and apply it in real work.", "research-many-tabs.png", "Manual learning scattered across tabs, docs, videos, articles, and notes", visual("scatter", "assets/non-coding/research-learning-before-diagram.png", "Before Codex learning diagram with scattered tabs, docs, videos, notes, and an unfinished mental model"), undefined, true),
+      pair("Research / Learning", "after", "Codex turns learning into a teaching artifact.", "Give Codex a source link, repo context, or screenshot, then ask for a single HTML explainer with simple language, visuals, glossary, examples, and self-check questions.", "Result: a local learning page you can revisit, inspect, and use to test whether the concept is actually understood.", "research-learning-html-artifact.png", "Codex prompt and generated HTML learning page for turning a paper into a reusable teaching artifact", undefined, "assets/non-coding/research-learning-codex-prompt.png", false, "assets/non-coding/research-learning-html-result.png"),
+      pair("Computer Use", "before", "Desktop work becomes app hopping.", "You move between Drive, browser dashboards, chat apps, design tools, and email while copying data and checking results by hand.", "Example: one Luma update can mean opening the sheet, finding emails, clicking guest records, changing status, then verifying one by one.", "computer-use-manual.png", "Manual desktop workflow across spreadsheets, event dashboard, chat, design, and email", visual("scatter", "assets/non-coding/computer-use-before-diagram.png", "Before Codex desktop workflow diagram with scattered apps and manual copy-check steps"), undefined, true),
+      pair("Computer Use", "after", "Codex can operate the apps on your computer.", "With Computer Use, browser control, or Chrome, Codex can use the apps you already have access to: Drive, Luma, iMessage, WhatsApp, Figma, email, and more.", "Give it the goal, source data, target app, and verification rule. For Luma, Codex read the sheet, deduped emails, bulk-updated guests to Going, and checked the counts.", "computer-use-luma-automation.png", "Codex Computer Use proof for Luma re-registration automation from Google Drive source data", undefined, "assets/non-coding/computer-use-luma-automation-proof.png"),
       {
         type: "section",
         number: "03",
         kicker: "Final takeaway",
-        title: "Codex helps turn repeated work into a system.",
-        lead: "Start with one workflow you repeat every week. Give Codex the context, tools, rules, and proof you expect."
+        title: "Codex turns repeated work into automated work systems.",
+        lead: "The pattern works for coding and non-coding work: give Codex context, tools, rules, and proof."
+      },
+      {
+        type: "model",
+        kicker: "Lesson learned",
+        title: "Better prompt + better system.",
+        lead: "A prompt tells Codex what to do once. A system helps Codex do repeated work reliably.",
+        cards: [
+          ["Better prompt", "Role, source context, task boundary, expected output, verification."],
+          ["Better system", "Project, skill, plugin, automation, browser or computer access, proof."],
+          ["What changes", "You stop rebuilding context from zero and start running a repeatable workflow."],
+          ["What to check", "Inputs are correct, actions are scoped, output is useful, proof is visible."]
+        ]
+      },
+      {
+        type: "imageTitle",
+        title: "Repeated work becomes a system when prompt and tools work together.",
+        image: "assets/non-coding/final-takeaway-work-system.png",
+        caption: "Final takeaway diagram showing repeated work becoming automation through better prompt, better system, and proof."
+      },
+      {
+        type: "section",
+        number: "Q&A",
+        kicker: "Thank you",
+        title: "Q&A about Codex.",
+        lead: "Ask anything about prompts, coding workflows, learning, automation, Computer Use, or how to start safely."
       },
       {
         type: "eventQr",
