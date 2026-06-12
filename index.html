@@ -867,6 +867,63 @@
       filter: drop-shadow(0 24px 48px rgba(18, 35, 150, 0.28));
     }
 
+    .image-title-slide {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 34px;
+      padding: 64px 88px;
+    }
+
+    .image-title-heading {
+      max-width: 1420px;
+      font-size: 74px;
+      line-height: 0.98;
+    }
+
+    .image-title-media {
+      position: relative;
+      min-height: 0;
+      border: 1px solid rgba(247, 249, 255, 0.24);
+      background: linear-gradient(145deg, rgba(247, 249, 255, 0.16), rgba(18, 35, 150, 0.32));
+      box-shadow: 0 30px 110px rgba(36, 44, 172, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .image-title-media img {
+      position: absolute;
+      inset: 24px;
+      width: calc(100% - 48px);
+      height: calc(100% - 48px);
+      object-fit: contain;
+      filter: drop-shadow(0 24px 48px rgba(18, 35, 150, 0.28));
+    }
+
+    .image-title-footer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr);
+      gap: 34px;
+      align-items: center;
+      font-size: 27px;
+      line-height: 1.3;
+    }
+
+    .image-title-link {
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(247, 249, 255, 0.62);
+      width: fit-content;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .image-title-note {
+      color: rgba(247, 249, 255, 0.82);
+      text-align: right;
+    }
+
     .empty-image-slide {
       padding: 64px 88px;
     }
@@ -877,6 +934,67 @@
       background: linear-gradient(145deg, rgba(247, 249, 255, 0.10), rgba(18, 35, 150, 0.24));
       box-shadow: 0 30px 110px rgba(36, 44, 172, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(18px);
+    }
+
+    .event-qr-slide {
+      display: grid;
+      place-items: center;
+      padding: 78px 88px;
+      text-align: center;
+    }
+
+    .event-qr-inner {
+      display: grid;
+      justify-items: center;
+      gap: 26px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .event-qr-heading {
+      font-size: 82px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .event-qr-heading span {
+      color: #b7c4ff;
+    }
+
+    .event-qr-date {
+      color: rgba(247, 249, 255, 0.72);
+      font-size: 36px;
+      line-height: 1.25;
+    }
+
+    .event-qr-card {
+      display: grid;
+      place-items: center;
+      width: 560px;
+      height: 560px;
+      padding: 28px;
+      border-radius: 28px;
+      background: #ffffff;
+      box-shadow: 0 34px 90px rgba(7, 14, 88, 0.38);
+    }
+
+    .event-qr-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+
+    .event-qr-note {
+      max-width: 1160px;
+      color: rgba(247, 249, 255, 0.9);
+      font-size: 31px;
+      line-height: 1.35;
+    }
+
+    .event-qr-note strong {
+      color: var(--white);
+      font-weight: 800;
     }
 
     .image-model-slide .model-grid {
@@ -1125,6 +1243,12 @@
       pair("MR / Review / Deploy", "after", "Codex creates the MR from the work evidence.", "Prompt Codex to create the MR, link the related GitHub issues, write the description, and attach screenshots from previous proof.", "Codex turns diff, issue context, test evidence, screenshots, and risk notes into review-ready MR context.", "mr-codex-review-ready.png", "Codex MR creation with linked GitHub issues, generated description, screenshots, and evidence", undefined, "assets/coding/mr-codex-create-pr.png", false, "assets/coding/mr-codex-created-pr.png"),
       pair("Sprint Review / Retro", "before", "Weekly reports depend on memory.", "We reconstruct shipped work, incidents, reviews, rollouts, and blockers from scattered updates after the week is already busy.", "Manual reporting is slow, misses context, and makes it harder to remember what should improve next sprint.", "retro-memory.png", "Manual weekly report reconstruction with scattered MRs, commits, incidents, reviews, rollouts, and blockers", visual("scatter", "assets/coding/retro-before-diagram-v2.png", "Minimal weekly report before Codex diagram"), undefined, true),
       pair("Sprint Review / Retro", "after", "Codex automates the weekly report.", "A weekly automation scans PRs, rollouts, incidents, reviews, and code changes, then turns them into a fast engineering summary.", "Use Codex to recall what happened, restructure the report, include fallback source references, and improve reporting quality.", "retro-codex-summary.png", "Codex weekly engineering summary automation for fast reporting and work-history recall", undefined, "assets/coding/retro-codex-weekly-automation.png"),
+      {
+        type: "imageTitle",
+        title: "From task to MR with Codex Goal.",
+        image: "assets/coding/codex-goal-combine-workflow.png",
+        caption: "Codex Goal workflow for selecting tasks, delegating agent prompts, verifying end to end, and creating one MR per task."
+      },
       section("02", "Non-Coding Workflows", "The same agentic pattern works outside software engineering."),
       {
         type: "model",
@@ -1139,20 +1263,38 @@
         ],
         image: "assets/non-coding/codex-plugins.png"
       },
-      pair("Content Creation", "before", "Ideas depend on manual scrolling.", "A creator opens X, LinkedIn, YouTube, newsletters, and old notes to find something to say.", "Example: every morning starts with search, not creation.", "content-idea-manual.png", "Manual search for content ideas"),
-      pair("Content Creation", "after", "Codex creates a daily idea pipeline.", "A 24h automation sends content ideas based on niche, previous posts, audience, and current trend.", "Example: you wake up with 5 usable angles, then pick one to develop.", "content-idea-automation.png", "Daily content idea automation screenshot"),
-      pair("Draft Refinement", "before", "Raw ideas are hard to judge alone.", "The idea may be true, but the hook, claim, or wording is still unclear.", "Example: you have a screenshot or thought, but not the final post yet.", "draft-raw-idea.png", "Raw note or screenshot before refinement"),
-      pair("Draft Refinement", "after", "Codex helps sharpen the point.", "Share the screenshot or rough text. Codex identifies the real claim and rewrites it in your tone.", "Example: ask for direct, warmer, and sharper versions before posting.", "draft-codex-refine.png", "Codex refining post from screenshot"),
-      pair("Social Engagement", "before", "Fast replies can create blunders.", "Manual engagement depends on mood, speed, and incomplete context.", "Example: a reply can sound too defensive, too strong, or off-brand.", "social-blunder-risk.png", "Manual reply draft with risk"),
-      pair("Social Engagement", "after", "A dedicated project gives guardrails.", "Create a Codex project for social engagement with tone, persona, risk rules, and reply examples.", "Example: before replying, Codex checks context and gives safer options.", "social-project-guardrails.png", "Project instructions for social engagement"),
-      pair("Marketing", "before", "Campaign inspiration is scattered.", "Marketing work starts with competitor tabs, ad libraries, references, and messy notes.", "Example: inspiration collection takes time before the idea is even clear.", "marketing-manual-research.png", "Competitor references and messy notes"),
-      pair("Marketing", "after", "Codex turns references into angles.", "Codex researches campaign patterns, positioning, hooks, headlines, and visual directions.", "Example: ask for 3 campaign angles with audience, promise, proof, and asset ideas.", "marketing-campaign-angles.png", "Campaign angle research output"),
-      pair("Asset Creation", "before", "Assets start from a blank canvas.", "Teams hunt stock images, wait for design bandwidth, or struggle to explain the visual.", "Example: the campaign idea exists, but the asset direction is still fuzzy.", "asset-blank-canvas.png", "Blank canvas or stock image search"),
-      pair("Asset Creation", "after", "Codex helps generate and refine assets.", "Use image generation for concepts, Creative Production for directions, and Canva for final editing.", "Example: generate a product scene, then resize and polish it in Canva.", "asset-imagegen-canva.png", "Generated visual plus Canva editing"),
-      pair("Slide Creation", "before", "Decks start from a blank slide.", "The hardest part is often story flow, not slide styling.", "Example: rough notes exist, but the narrative is not presentation-ready.", "slides-blank-deck.png", "Blank slide deck"),
-      pair("Slide Creation", "after", "Codex turns rough notes into a deck plan.", "Codex creates structure, slide-by-slide message, speaker notes, and visual placeholders.", "Example: this Codex meetup deck starts from messy notes and becomes a real HTML deck.", "slides-codex-outline.png", "Codex slide outline and generated deck"),
-      pair("Meeting / Report", "before", "Context collection is manual.", "Open calendar, docs, email, chat, and spreadsheets before writing prep or reports.", "Example: meeting prep becomes tab management.", "meeting-manual-context.png", "Calendar, docs, and chat tabs"),
-      pair("Meeting / Report", "after", "Codex prepares the working brief.", "Codex creates agenda, context, open questions, follow-up list, progress, blockers, and metrics.", "Example: weekly report automation creates summary before the meeting.", "meeting-codex-brief.png", "Meeting brief or weekly report output"),
+      pair("Content Creation", "before", "Ideas depend on manual scrolling.", "A creator opens X, LinkedIn, YouTube, newsletters, trends, and old notes just to find a useful angle.", "Manual ideation burns the morning on search, tab switching, weak signals, and ideas that may not match your style.", "content-idea-manual.png", "Manual content ideation with scattered sources, too many tabs, weak signal, and style mismatch", visual("scatter", "assets/non-coding/content-creation-before-diagram-v2.png", "Minimal content creation before Codex diagram"), undefined, true),
+      pair("Content Creation", "after", "Codex automates content ideation.", "A daily automation searches current AI and tech updates, summarizes what matters, and recommends content ideas in your style.", "Use Codex to turn live search into practical post angles, technical signals, learning points, and daily recommendations.", "content-idea-automation.png", "Tech Update automation for live search, ideation, and content recommendations", undefined, "assets/non-coding/content-creation-tech-update-automation.png"),
+      pair("Draft Refinement", "before", "Raw opinions are hard to judge alone.", "The idea may be interesting, but the logic, tone, claim, and risk are still unclear before posting.", "Without a thinking partner, we can publish too fast or keep editing without knowing what is actually weak.", "draft-raw-idea.png", "Raw idea before refinement with unclear logic, tone, and claim", visual("scatter", "assets/non-coding/draft-refinement-before-diagram-v2.png", "Minimal draft refinement before Codex diagram"), undefined, true),
+      pair("Draft Refinement", "after", "Codex helps test the opinion first.", "Share the rough thought or screenshot, then use Codex to verify logic, refine the opinion, and discuss the angle.", "Brainstorm before posting: ask for pros and cons, weak points, stronger framing, and whether the claim still makes sense.", "draft-codex-refine.png", "Codex discussion for logic checking, opinion refinement, and brainstorming before posting", undefined, "assets/non-coding/draft-refinement-codex-discussion.png"),
+      pair("Social Engagement", "before", "Fast engagement can miss the point.", "A reply or thread can move quickly, but the hook, tone, persona, and audience context are easy to misread.", "Without a second read, content can become too defensive, off-brand, flat, or missing the real improvement angle.", "social-blunder-risk.png", "Manual social engagement with scattered context and risky reply signals", visual("scatter", "assets/non-coding/social-engagement-before-diagram-v2.png", "Minimal social engagement before Codex diagram"), undefined, true),
+      pair("Social Engagement", "after", "Codex reviews before you post.", "Use Codex to review your draft or Typefully thread against your persona, then get feedback, gaps, and recommendations.", "Codex should improve your wording, hook, structure, and risk framing while keeping the voice personal instead of writing from zero.", "social-project-guardrails.png", "Codex feedback for Typefully thread review, persona fit, missing gaps, and recommendations", undefined, "assets/non-coding/social-engagement-codex-typefully-review.png"),
+      pair("Marketing", "before", "Marketing planning starts everywhere.", "Before Codex, campaign work means searching competitors, social trends, product references, audience notes, and old ideas by hand.", "Manual research makes the decision slow: the deck, objective, positioning, and campaign plan are still scattered.", "marketing-manual-research.png", "Manual marketing research with scattered tabs, unclear objective, and slow campaign decision", visual("scatter", "assets/non-coding/marketing-before-diagram-v2.png", "Minimal marketing before Codex diagram"), undefined, true),
+      pair("Marketing", "after", "Codex prepares the marketing decision.", "Give Codex the product, reference images, objective, and channel context so it can research, plan, and shape the campaign deck.", "Use Codex to compare campaign goals, ask the right planning questions, prepare the deck direction, and make the marketing decision easier.", "marketing-campaign-angles.png", "Codex marketing planning with campaign deck, research plan, and decision support", undefined, "assets/non-coding/marketing-codex-campaign-prompt.png", false, "assets/non-coding/marketing-codex-campaign-plan.png"),
+      {
+        type: "imageTitle",
+        title: "Codex can turn the plan into a campaign deck.",
+        image: "assets/non-coding/marketing-codex-google-slides-result.png",
+        caption: "Codex-created Google Slides campaign deck result",
+        link: "https://docs.google.com/presentation/d/1hXee0IKjFV9WcVBdbmelaezBmJqtkMLzHh0G8Fmp0Ks/edit?usp=sharing",
+        linkLabel: "Golden Farm UGC Sales Campaign Pilot",
+        note: "Note: Codex can create the first deck, but design taste still needs references, review, and editing."
+      },
+      pair("Asset Creation", "before", "Asset direction starts too fuzzy.", "Teams search stock images, wait for design bandwidth, or try to describe a product scene without a strong visual reference.", "The campaign idea may be clear, but the asset can still look generic, off-product, or not UGC enough.", "asset-blank-canvas.png", "Manual asset creation with blank canvas, stock search, weak product fit, and slow design queue", visual("scatter", "assets/non-coding/asset-creation-before-diagram-v2.png", "Minimal asset creation before Codex diagram"), undefined, true),
+      pair("Asset Creation", "after", "Codex generates product-fit UGC assets.", "Use Codex image generation to create new campaign assets from a product reference, then refine until the scene matches the product and content goal.", "Good for UGC: generate realistic product scenes, compare candidates, keep the pack recognizable, and turn the result into marketing or content assets.", "asset-imagegen-canva.png", "Codex-generated UGC assets from a product reference image", undefined, "assets/non-coding/asset-creation-codex-ugc-summary.png", false, "assets/non-coding/asset-creation-codex-ugc-result.png"),
+      pair("Spreadsheet / Finance", "before", "Business tracking starts from a blank sheet.", "Before Codex, small-business tracking means building stock, sales, revenue, expense, profit, and notes tables by hand.", "You need to know formulas, protect cells, design the tabs, or buy a template that still may not match the business.", "sheets-manual-finance.png", "Manual spreadsheet setup with formulas, templates, stock, revenue, expense, profit, and notes", visual("scatter", "assets/non-coding/spreadsheet-finance-before-diagram-v2.png", "Minimal spreadsheet finance before Codex diagram"), undefined, true),
+      pair("Spreadsheet / Finance", "after", "Codex builds the finance tracker from the business rules.", "Tell Codex the business model, what you buy and sell, how stock moves, and what money needs to be reported.", "Codex can create a Google Sheet with stock control, revenue, expense, profit, audit checks, and notes so the owner can understand the business faster.", "sheets-codex-finance.png", "Codex-created Google Sheets tracker for stock, revenue, expense, profit, notes, and audit checks", undefined, undefined, true),
+      {
+        type: "imageTitle",
+        title: "Codex can turn money rules into a working Sheet.",
+        image: "assets/non-coding/spreadsheet-finance-codex-prompt.png",
+        caption: "Codex prompt for creating a business finance and stock tracker in Google Sheets",
+        link: "https://docs.google.com/spreadsheets/d/1tR2hQUfuHp9X6umGk_wtFb7eU6WGO-jbnqlT3m0bkjY/edit?usp=sharing",
+        linkLabel: "Buttonscarves Reseller Tracker",
+        note: "Example result: stock control, sales, revenue, expenses, profit, notes, and checks in one spreadsheet."
+      },
+      pair("Meeting / Report", "before", "Reports start with context hunting.", "Before writing notes or a report, we manually open Notion, email, chat, Drive, spreadsheets, and old meeting notes.", "The work becomes puzzle assembly: finding progress, decisions, blockers, numbers, and evidence before the actual report starts.", "meeting-manual-context.png", "Manual meeting report context hunting across notes, email, chat, Drive, and spreadsheets", visual("scatter", "assets/non-coding/meeting-report-before-diagram-v2.png", "Minimal meeting report before Codex diagram"), undefined, true),
+      pair("Meeting / Report", "after", "Codex assembles the report puzzle.", "Ask Codex to gather context from the connected tools, plan the notes, surface decisions and blockers, and draft the report.", "Use it to turn scattered updates into progress this week, important decisions, open blockers, evidence, and a sendable summary.", "meeting-codex-brief.png", "Codex prompt for gathering context and drafting a team report from connected tools", undefined, "assets/non-coding/meeting-report-codex-team-report-prompt.png"),
       pair("Research / Learning", "before", "Learning gets trapped in many tabs.", "You read docs, articles, videos, and notes, but the useful takeaways are scattered.", "Example: after an hour of reading, it is hard to explain what changed in your thinking.", "research-many-tabs.png", "Many research tabs and notes"),
       pair("Research / Learning", "after", "Codex turns sources into learning notes.", "Codex summarizes, compares, extracts tradeoffs, and creates a concise learning note.", "Example: ask for what matters, what to try next, and what risk to watch.", "research-learning-note.png", "Codex research summary"),
       pair("Computer Use", "before", "Some workflows still need clicking.", "Forms, dashboards, browser tools, and apps require manual navigation and repeated checks.", "Example: you know what to do, but still need to operate the interface step by step.", "computer-use-manual.png", "Manual app or browser clicking"),
@@ -1175,6 +1317,14 @@
         kicker: "Final takeaway",
         title: "Codex helps turn repeated work into a system.",
         lead: "Start with one workflow you repeat every week. Give Codex the context, tools, rules, and proof you expect."
+      },
+      {
+        type: "eventQr",
+        title: "See you at",
+        site: "idsw.dev",
+        date: "21-22 November 2026 · Jakarta",
+        image: "assets/non-coding/idsw-2026-qr.jpeg",
+        note: "Scan to join the mailing list and get exclusive super early bird notification."
       }
     ];
 
@@ -1285,6 +1435,26 @@
           <aside class="app-image-media reveal">
             <img src="${escapeHtml(slide.image)}" alt="${escapeHtml(slide.caption)}">
           </aside>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
+    function renderImageTitle(slide, index) {
+      const footer = slide.link || slide.note
+        ? `<div class="image-title-footer reveal">
+            ${slide.link ? `<a class="image-title-link" href="${escapeHtml(slide.link)}" target="_blank" rel="noreferrer" data-editable="true">${escapeHtml(slide.linkLabel || slide.link)}</a>` : "<span></span>"}
+            ${slide.note ? `<p class="image-title-note" data-editable="true">${escapeHtml(slide.note)}</p>` : "<span></span>"}
+          </div>`
+        : "";
+
+      return `
+        <section class="slide image-title-slide" data-slide="${index}">
+          <h1 class="image-title-heading reveal" data-editable="true">${escapeHtml(slide.title)}</h1>
+          <aside class="image-title-media reveal">
+            <img src="${escapeHtml(slide.image)}" alt="${escapeHtml(slide.caption)}">
+          </aside>
+          ${footer}
           ${renderMeta(index)}
         </section>
       `;
@@ -1418,6 +1588,22 @@
       `;
     }
 
+    function renderEventQr(slide, index) {
+      return `
+        <section class="slide event-qr-slide" data-slide="${index}">
+          <div class="event-qr-inner">
+            <h1 class="event-qr-heading reveal" data-editable="true">${escapeHtml(slide.title)} <span>${escapeHtml(slide.site)}</span></h1>
+            <p class="event-qr-date reveal" data-editable="true">${escapeHtml(slide.date)}</p>
+            <div class="event-qr-card reveal">
+              <img src="${escapeHtml(slide.image)}" alt="IDSW 2026 mailing list QR code">
+            </div>
+            <p class="event-qr-note reveal" data-editable="true">${escapeHtml(slide.note).replace("mailing list", "<strong>mailing list</strong>")}</p>
+          </div>
+          ${renderMeta(index)}
+        </section>
+      `;
+    }
+
     function renderMeta(index) {
       return `
         <div class="meta-row">
@@ -1432,7 +1618,9 @@
         if (slide.type === "title") return renderTitle(slide, index);
         if (slide.type === "bio") return renderBio(slide, index);
         if (slide.type === "appImage") return renderAppImage(slide, index);
+        if (slide.type === "imageTitle") return renderImageTitle(slide, index);
         if (slide.type === "emptyImage") return renderEmptyImage(slide, index);
+        if (slide.type === "eventQr") return renderEventQr(slide, index);
         if (slide.type === "section") return renderSection(slide, index);
         if (slide.type === "model") return renderModel(slide, index);
         return renderWorkflow(slide, index);
